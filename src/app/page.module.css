@@ -1,0 +1,10 @@
+body {
+  background-color: #fcf9f2 !important;
+}
+.css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
+  filter: blur(200px) !important;
+  background-color: white !important;
+}
+.css-1k0ku3a-MuiPaper-root-MuiDialog-paper {
+  border-radius: 22px !important;
+}
