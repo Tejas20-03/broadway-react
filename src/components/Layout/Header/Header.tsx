@@ -68,7 +68,6 @@ const Header: React.FC = () => {
 
   const [scrollPosition, setScrollPosition] = useState(0);
 
-
   const showModelCityFun = (val: boolean) => {
     setShowModelCity(val);
   };
@@ -130,17 +129,26 @@ const Header: React.FC = () => {
       const position = window.pageYOffset;
       setScrollPosition(position);
     };
-  
-    window.addEventListener('scroll', handleScroll, { passive: true });
-  
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
     <>
-      <Box sx={{...style.main,backgroundColor: `rgba(255, 255, 255, ${Math.min(scrollPosition / 400, 0.9)})`}}>
+      <Box
+        sx={{
+          ...style.main,
+          height: "74px", // Add this line
+          backgroundColor: `rgba(255, 255, 255, ${Math.min(
+            scrollPosition / 400,
+            0.9
+          )})`,
+        }}
+      >
         <Container sx={style.container}>
           <Box sx={style.header}>
             <Image

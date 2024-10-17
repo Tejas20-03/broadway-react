@@ -19,6 +19,7 @@ const poppins = Poppins({
 const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
   const [activeTab, setActiveTab] = useState<string>("");
   const swiperRef = useRef<SwiperRef>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const handleTabClick = (item: string, index: number) => {
     const headingElement = document.getElementById(item);
     if (headingElement) {
@@ -61,6 +62,19 @@ const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
   };
 
   useEffect(() => {
+    const handleScroll = () => {
+      const position = window.pageYOffset;
+      setScrollPosition(position);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -69,7 +83,16 @@ const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
 
   return (
     <>
-      <Box sx={style.main}>
+      <Box
+        sx={{
+          ...style.main,
+          backgroundColor: `rgba(255, 255, 255, ${Math.min(
+            scrollPosition / 400,
+            0.9
+          )})`,
+          top: "74px", // Adjust this value to remove the gap
+        }}
+      >
         <Container sx={style.container}>
           <Swiper
             ref={swiperRef}
@@ -140,7 +163,7 @@ const style = {
     backgroundColor: colors.background,
     paddingTop: "4px",
     paddingLeft: { sx: 0, sm: 0, md: 0, lg: 10, xl: 10 },
-    marginLeft: { md: "50px" },
+    // marginLeft: { md: "50px" },
   },
   container: {
     maxWidth: { lg: "1700px", md: "1300px" },
