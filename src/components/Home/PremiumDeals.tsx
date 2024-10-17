@@ -23,7 +23,6 @@ const PremiumDeals: React.FC<Iprops> = ({ data = [], heading, isLoading }) => {
       ).length > 0 && (
         <Box sx={style.subBox}>
           <Heading heading={heading} isLoading={isLoading} />
-
           <Box
             sx={{
               marginLeft: { lg: "1rem", xs: "0px" },

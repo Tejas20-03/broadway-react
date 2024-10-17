@@ -39,7 +39,7 @@ const NavItem = ({ href, src, title, onClick, isActive }: NavItemProps) => (
       <Box
         sx={{
           ...style.iconWrapper,
-          backgroundColor: isActive ? "orange" : "transparent",
+          backgroundColor: title === "Menu" ? "black" : isActive ? "orange" : "transparent",
           borderRadius: "50%",
         }}
       >
@@ -48,7 +48,10 @@ const NavItem = ({ href, src, title, onClick, isActive }: NavItemProps) => (
           width={ICON_SIZE}
           height={ICON_SIZE}
           alt={ICON_ALT}
-          style={{ ...style.iconImage, filter: "invert(1)" }}
+          style={{
+            ...style.iconImage,
+            filter: title === "Menu" ? "brightness(0) invert(1)" : "brightness(0)",
+          }}
         />
       </Box>
       <Typography className={poppins.className} sx={style.text}>
@@ -58,10 +61,12 @@ const NavItem = ({ href, src, title, onClick, isActive }: NavItemProps) => (
   </Tooltip>
 );
 
+
+
 const navItems = [
+  { href: "/menu", src: "/menu1.png", title: "Menu" },
   { href: "/home", src: "/home.png", title: "Home" },
   { href: "/", src: "/bag.svg", title: "Order Now" },
-  { href: "/menu", src: "/menu1.png", title: "Menu" },
   { href: "/location", src: "/location1.png", title: "Location" },
   { href: "/franchise", src: "/franchise.png", title: "Franchise" },
   { href: "/contact", src: "/contact1.png", title: "Contact" },
@@ -77,41 +82,53 @@ const HeaderStrip: React.FC<IProps> = ({ openFeedbackDialog }) => {
   return (
     <Box className="showHide" sx={style.leftMenuLargeOnly}>
       <Box sx={style.iconBoxLarge}>
-        {navItems.map((item) => (
+        <Box>
+          {navItems.slice(0, 5).map((item) => (
+            <NavItem
+              key={item.title}
+              {...item}
+              isActive={pathname === item.href}
+            />
+          ))}
+        </Box>
+        <Box>
+          {navItems.slice(5).map((item) => (
+            <NavItem
+              key={item.title}
+              {...item}
+              isActive={pathname === item.href}
+            />
+          ))}
           <NavItem
-            key={item.title}
-            {...item}
-            isActive={pathname === item.href}
+            src="/feedback1.png"
+            title="Feedback"
+            onClick={() => openFeedbackDialog(true)}
+            isActive={false}
           />
-        ))}
-        <NavItem
-          src="/feedback1.png"
-          title="Feedback"
-          onClick={() => openFeedbackDialog(true)}
-          isActive={false}
-        />
-        <Box sx={{ position: "relative" }}>
-          <NavItem
-            href="/cart"
-            src="/bag1.png"
-            title="Cart"
-            isActive={pathname === "/cart"}
-          />
-          {cartData.cartProducts.length > 0 && (
-            <Box sx={style.badge}>
-              <Typography
-                className={poppins.className}
-                sx={{ fontSize: 12, color: "white" }}
-              >
-                {cartData.cartProducts.length}
-              </Typography>
-            </Box>
-          )}
+          <Box sx={{ position: "relative" }}>
+            <NavItem
+              href="/cart"
+              src="/bag1.png"
+              title="Cart"
+              isActive={pathname === "/cart"}
+            />
+            {cartData.cartProducts.length > 0 && (
+              <Box sx={style.badge}>
+                <Typography
+                  className={poppins.className}
+                  sx={{ fontSize: 12, color: "white" }}
+                >
+                  {cartData.cartProducts.length}
+                </Typography>
+              </Box>
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>
   );
 };
+
 
 const style = {
   leftMenuLargeOnly: {
@@ -121,12 +138,13 @@ const style = {
     top: 0,
     width: "70px",
     display: { lg: "flex", xs: "none" },
-    alignItems: "flex-start",
-    justifyContent: "center",
+    flexDirection: "column",
+    justifyContent: "space-between",
     padding: "1rem 0.5rem",
     background: "white",
     zIndex: 99,
   },
+  
   iconWrapper: {
     display: "flex",
     justifyContent: "center",
@@ -137,7 +155,8 @@ const style = {
   iconBoxLarge: {
     display: "flex",
     flexDirection: "column",
-    gap: "15px",
+    justifyContent: "space-between",
+    height: "100%",
   },
   badge: {
     position: "absolute",
@@ -167,7 +186,11 @@ const style = {
     fontSize: 12,
     fontWeight: "300",
     color: "gray",
-    // marginLeft: "4px",
+  },
+  menuIcon: {
+    backgroundColor: "black",
+    borderRadius: "50%",
+    padding: "5px",
   },
 };
 
