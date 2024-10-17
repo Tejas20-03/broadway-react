@@ -66,6 +66,9 @@ const Header: React.FC = () => {
   const [FeedbackoutValue, setFeedbackoutValue] = React.useState(false);
   const [outlets, setOutlets] = useState<AllOutletsResponseType["Data"]>([]);
 
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+
   const showModelCityFun = (val: boolean) => {
     setShowModelCity(val);
   };
@@ -122,24 +125,39 @@ const Header: React.FC = () => {
     setCartFromLocalStorage();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.pageYOffset;
+      setScrollPosition(position);
+    };
+  
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <Box sx={style.main}>
+      <Box sx={{...style.main,backgroundColor: `rgba(255, 255, 255, ${Math.min(scrollPosition / 400, 0.9)})`}}>
         <Container sx={style.container}>
           <Box sx={style.header}>
             <Image
               alt="main-logo"
               src={logo}
               fill={false}
+              width={120}
+              height={50}
               style={{ cursor: "pointer" }}
               onClick={redirectToHome}
             />
-            <Image
+            {/* <Image
               alt="main-logo"
               src={headerImage}
               fill={false}
               className="headerMiddleImage"
-            />
+            /> */}
             <Box
               sx={style.headerLocationBox}
               onClick={() => toggleDrawer(true)}
@@ -334,15 +352,11 @@ export default Header;
 const style = {
   main: {
     width: "100%",
-    height: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     position: "sticky",
-    backgroundColor: colors.background,
     top: 0,
     zIndex: 100,
-    marginLeft: { md: "60px" },
+    // marginLeft: { md: "60px" },
+    transition: "background-color 0.1s ease",
   },
   mainMob: {
     width: "100%",

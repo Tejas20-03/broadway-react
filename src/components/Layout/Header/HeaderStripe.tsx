@@ -1,223 +1,117 @@
-"use client ";
+"use client";
 import { Box, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { colors } from "@/constant/Colors";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/redux/reduxStore";
 import { Poppins } from "next/font/google";
-import { color } from "framer-motion";
+import { usePathname } from "next/navigation";
+
 type IProps = {
   openFeedbackDialog: (value: boolean) => void;
 };
+
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["300", "700"],
 });
+
+const ICON_SIZE = 34;
+const ICON_ALT = "Navigation icon";
+
+type NavItemProps = {
+  href?: string;
+  src: string;
+  title: string;
+  onClick?: () => void;
+  isActive: boolean;
+};
+
+const NavItem = ({ href, src, title, onClick, isActive }: NavItemProps) => (
+  <Tooltip title={title} placement="right" arrow>
+    <Box
+      component={onClick ? "div" : Link}
+      href={href}
+      onClick={onClick}
+      sx={style.itemContainer}
+    >
+      <Box
+        sx={{
+          ...style.iconWrapper,
+          backgroundColor: isActive ? "orange" : "transparent",
+          borderRadius: "50%",
+        }}
+      >
+        <Image
+          src={src}
+          width={ICON_SIZE}
+          height={ICON_SIZE}
+          alt={ICON_ALT}
+          style={{ ...style.iconImage, filter: "invert(1)" }}
+        />
+      </Box>
+      <Typography className={poppins.className} sx={style.text}>
+        {title}
+      </Typography>
+    </Box>
+  </Tooltip>
+);
+
+const navItems = [
+  { href: "/home", src: "/home.png", title: "Home" },
+  { href: "/", src: "/bag.svg", title: "Order Now" },
+  { href: "/menu", src: "/menu1.png", title: "Menu" },
+  { href: "/location", src: "/location1.png", title: "Location" },
+  { href: "/franchise", src: "/franchise.png", title: "Franchise" },
+  { href: "/contact", src: "/contact1.png", title: "Contact" },
+  { href: "/catering", src: "/catering.png", title: "Catering Event" },
+  { href: "/corporate", src: "/coporate.png", title: "Corporate Event" },
+  { href: "/blogs", src: "/blog.png", title: "Blogs" },
+];
+
 const HeaderStrip: React.FC<IProps> = ({ openFeedbackDialog }) => {
   const cartData = useSelector((state: StoreState) => state.cart);
+  const pathname = usePathname();
+
   return (
     <Box className="showHide" sx={style.leftMenuLargeOnly}>
       <Box sx={style.iconBoxLarge}>
-        <Tooltip title="Home" placement="right" arrow>
-          <Link href={"/home"} style={{ textDecoration: "none" }}>
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/home.png"
-                width={38}
-                height={38}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Home
-              </Typography>
-            </Box>
-          </Link>
-        </Tooltip>
-        <Tooltip title="Order Now" placement="right" arrow>
-          <Link href={"/"} style={{ textDecoration: "none" }}>
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/bag.svg"
-                width={38}
-                height={38}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Order Now
-              </Typography>
-            </Box>
-          </Link>
-        </Tooltip>
+        {navItems.map((item) => (
+          <NavItem
+            key={item.title}
+            {...item}
+            isActive={pathname === item.href}
+          />
+        ))}
+        <NavItem
+          src="/feedback1.png"
+          title="Feedback"
+          onClick={() => openFeedbackDialog(true)}
+          isActive={false}
+        />
         <Box sx={{ position: "relative" }}>
-          <Tooltip title="Add to cart" placement="right" arrow>
-            <Link href={"/cart"} style={{ textDecoration: "none" }}>
-              <Box sx={style.itemContanier}>
-                <Image
-                  src="/bag1.png"
-                  width={38}
-                  height={38}
-                  alt=";[[]d"
-                  style={style.iconImage}
-                />
-                {cartData.cartProducts.length > 0 && (
-                  <Box sx={style.badge}>
-                    <Typography
-                      className={poppins.className}
-                      sx={{ fontSize: 12, color: colors.black }}
-                    >
-                      {cartData.cartProducts.length}
-                    </Typography>
-                  </Box>
-                )}
-
-                <Typography className={poppins.className} sx={style.text}>
-                  Cart
-                </Typography>
-              </Box>
-            </Link>
-          </Tooltip>
+          <NavItem
+            href="/cart"
+            src="/bag1.png"
+            title="Cart"
+            isActive={pathname === "/cart"}
+          />
+          {cartData.cartProducts.length > 0 && (
+            <Box sx={style.badge}>
+              <Typography
+                className={poppins.className}
+                sx={{ fontSize: 12, color: "white" }}
+              >
+                {cartData.cartProducts.length}
+              </Typography>
+            </Box>
+          )}
         </Box>
-        <Tooltip title="Menu" placement="right" arrow>
-          <Link href={"/menu"} style={{ textDecoration: "none" }}>
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/menu1.png"
-                width={37}
-                height={37}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Menu
-              </Typography>
-            </Box>
-          </Link>
-        </Tooltip>
-
-        <Tooltip title="Location" placement="right" arrow>
-          <Link href={"/location"} style={{ textDecoration: "none" }}>
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/location1.png"
-                width={38}
-                height={38}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Location
-              </Typography>
-            </Box>
-          </Link>
-        </Tooltip>
-        <Tooltip title="Feedback" placement="right" arrow>
-          <Box
-            sx={{ cursor: "pointer" }}
-            onClick={() => openFeedbackDialog(true)}
-          >
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/feedback1.png"
-                width={38}
-                height={38}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Feedback
-              </Typography>
-            </Box>
-          </Box>
-        </Tooltip>
-        <Tooltip title="Franchise" placement="right" arrow>
-          <Link href={"/franchise"} style={{ textDecoration: "none" }}>
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/franchise.png"
-                width={38}
-                height={38}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Franchise
-              </Typography>
-            </Box>
-          </Link>
-        </Tooltip>
-        <Tooltip title="Contact" placement="right" arrow>
-          <Link href={"/contact"} style={{ textDecoration: "none" }}>
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/contact1.png"
-                width={38}
-                height={38}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Contact
-              </Typography>
-            </Box>
-          </Link>
-        </Tooltip>
-        <Tooltip title="Catering Event" placement="right" arrow>
-          <Link href={"/catering"} style={{ textDecoration: "none" }}>
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/catering.png"
-                width={38}
-                height={38}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Catering Event
-              </Typography>
-            </Box>
-          </Link>
-        </Tooltip>
-        <Tooltip title="Corporate Event" placement="right" arrow>
-          <Link href={"/corporate"} style={{ textDecoration: "none" }}>
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/coporate.png"
-                width={38}
-                height={38}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Corporate Event
-              </Typography>
-            </Box>
-          </Link>
-        </Tooltip>
-        <Tooltip title="Blogs" placement="right" arrow>
-          <Link href={"/blogs"} style={{ textDecoration: "none" }}>
-            <Box sx={style.itemContanier}>
-              <Image
-                src="/blog.png"
-                width={38}
-                height={38}
-                alt=";[[]d"
-                style={style.iconImage}
-              />
-              <Typography className={poppins.className} sx={style.text}>
-                Blogs
-              </Typography>
-            </Box>
-          </Link>
-        </Tooltip>
       </Box>
     </Box>
   );
 };
-export default HeaderStrip;
 
 const style = {
   leftMenuLargeOnly: {
@@ -225,24 +119,32 @@ const style = {
     height: "100vh",
     left: 0,
     top: 0,
+    width: "70px",
     display: { lg: "flex", xs: "none" },
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
-    padding: "0.5rem",
-    background: colors.primary,
+    padding: "1rem 0.5rem",
+    background: "white",
     zIndex: 99,
+  },
+  iconWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: ICON_SIZE + 10,
+    height: ICON_SIZE + 10,
   },
   iconBoxLarge: {
     display: "flex",
     flexDirection: "column",
-    gap: "20px",
+    gap: "15px",
   },
   badge: {
     position: "absolute",
     top: "-5px",
     right: "5px",
-    background: colors.white,
-    color: colors.primary,
+    background: "black",
+    color: "white",
     borderRadius: "50%",
     width: "20px",
     height: "20px",
@@ -251,17 +153,22 @@ const style = {
     justifyContent: "center",
     textAlign: "center",
   },
-  iconImage: { padding: "4px" },
-  itemContanier: {
+  iconImage: { padding: 4 },
+  itemContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    // justifyContent: "space-between",
+    justifyContent: "center",
+    cursor: "pointer",
+    textDecoration: "none",
+    textAlign: "center",
   },
   text: {
-    fontSize: 10,
-    fontWeight: "500",
-    color: colors.white,
-    marginLeft: "4px",
+    fontSize: 12,
+    fontWeight: "300",
+    color: "gray",
+    // marginLeft: "4px",
   },
 };
+
+export default HeaderStrip;
