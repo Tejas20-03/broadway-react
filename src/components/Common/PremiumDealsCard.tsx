@@ -29,6 +29,8 @@ import { StoreDispatch, StoreState } from "@/redux/reduxStore";
 import { addToCart } from "@/redux/cart/actions";
 import { add } from "lodash";
 import { addressesActions } from "@/redux/address/slice";
+
+
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({}));
@@ -36,25 +38,25 @@ const Root = styled("div")(({ theme }) => ({}));
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
 }));
+
 interface FacebookPixelParams {
   value: number;
   currency: string;
-  // Add other properties if needed
 }
 
 declare const fbq: (
   type: string,
   eventName: string
-  //params: FacebookPixelParams
 ) => void;
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
 });
+
 type Iprops = {
   text: string;
   price: string;
-  background: string;
   src: string;
   discount: number;
   description: string;
@@ -64,10 +66,10 @@ type Iprops = {
   isLoading: boolean;
   isNew: boolean;
 };
+
 const PremiumDealsCard: React.FC<Iprops> = ({
   text,
   price,
-  background,
   src,
   discount,
   description,
@@ -85,6 +87,7 @@ const PremiumDealsCard: React.FC<Iprops> = ({
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const addressData = useSelector((state: StoreState) => state.address);
   const dispatch = useDispatch<StoreDispatch>();
+
   const toggleDrawer = (newOpen: boolean) => {
     if (!addressData.addressType) {
       setIsAddress(true);
@@ -221,7 +224,7 @@ const PremiumDealsCard: React.FC<Iprops> = ({
             <Box sx={style.titleBox}>
               <Typography
                 className={poppins.className}
-                sx={{ ...style.title, backgroundColor: background }}
+                sx={style.title}
               >
                 {text}
               </Typography>

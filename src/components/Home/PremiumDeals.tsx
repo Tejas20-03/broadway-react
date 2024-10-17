@@ -37,7 +37,7 @@ const PremiumDeals: React.FC<Iprops> = ({ data = [], heading, isLoading }) => {
               },
             }}
           >
-            <Grid container rowSpacing={0} columnSpacing={0}>
+            <Grid container spacing={2}>
               {data &&
                 data.length > 0 &&
                 data.filter((item) =>
@@ -52,22 +52,14 @@ const PremiumDeals: React.FC<Iprops> = ({ data = [], heading, isLoading }) => {
                     )
                   )
                   .map((item, index) => {
-                    const background =
-                      index % 3 === 0
-                        ? colors.tab1
-                        : index % 3 === 1
-                        ? colors.tab2
-                        : colors.tab3;
-
                     return (
-                      <Grid item xs={6} sm={4} md={3} lg={3} xl={2} key={index}>
+                      <Grid xs={12} sm={6} md={3} key={index}>
                         <PremiumDealsCard
                           isLoading={isLoading}
                           key={index}
                           text={item.Name}
                           price={item.MinDeliveryPrice?.toString()}
                           src={item.ImageBase64}
-                          background={background}
                           description={item?.Description}
                           discount={item?.DiscountPercentage}
                           serving={item?.Serving}
@@ -92,7 +84,7 @@ const style = {
     width: "100%",
     paddingBottom: { md: "10px", xs: "8px" },
     backgroundColor: colors.background,
-    marginLeft: { md: "50px" },
+    margin: { md: "50px" },
   },
   subBox: {
     paddingLeft: { lg: "5rem", xs: "5px" },

@@ -34,8 +34,8 @@ export default Heading;
 const style = {
   heading: {
     letterSpacing: "normal",
-    fontWeight: 700,
-    fontSize: { lg: "3rem", xs: "20px" },
+    fontWeight: 600,
+    fontSize: { lg: "2rem", xs: "20px" },
     marginLeft: { lg: "1rem", xs: "13px", md: "2rem" },
 
     color: colors.haeding,
