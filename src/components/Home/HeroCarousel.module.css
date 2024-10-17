@@ -1,0 +1,44 @@
+.swiperContainer {
+  position: relative;
+}
+
+.swiperButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: #00a651;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 20px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.swiperButtonPrev {
+  left: 0;
+}
+
+.swiperButtonNext {
+  right: 0;
+}
+
+.swiperButton::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+}
+
+.swiperButtonPrev::after {
+  transform: rotate(-135deg);
+}
+
+.swiperButtonNext::after {
+  transform: rotate(45deg);
+}

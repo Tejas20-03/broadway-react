@@ -371,12 +371,12 @@ const style = {
   },
   header: {
     width: "100%",
-    padding: { md: "1rem", xs: "0px" },
+    padding: { md: "0.5rem", xs: "0px" }, // Reduced from 1rem to 0.5rem
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingTop: "10px !important",
+    paddingTop: "5px !important", // Reduced from 10px to 5px
   },
   searchBoxMob: {
     width: "100%",
@@ -397,7 +397,7 @@ const style = {
   locationText: {},
   dilveryTo: {
     color: colors.black,
-    fontSize: "1rem",
+    fontSize: "0.9rem", // Reduced from 1rem
     fontStyle: "bold",
   },
   iconColor: {
@@ -407,6 +407,7 @@ const style = {
   },
   location: {
     fontWeight: 600,
+    fontSize: "0.9rem", // Added font size
   },
   inputStyle: {
     "::before": { borderBottom: "0px !important" },
@@ -516,7 +517,7 @@ const style = {
   },
   outvals: {
     cursor: "pointer",
-    fontSize: "0.9rem",
+    fontSize: "0.8rem", // Reduced from 0.9rem
     fontWeight: 400,
   },
   iconStyles: {

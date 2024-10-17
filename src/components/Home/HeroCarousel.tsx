@@ -3,24 +3,20 @@ import { Box, Skeleton } from "@mui/material";
 import Image from "next/image";
 import React, { createRef, useEffect, useState } from "react";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
+import "swiper/css/navigation";
 import { getBanners } from "@/services/Home/services";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/redux/reduxStore";
+import styles from "./HeroCarousel.module.css";
 
 const HeroCarousel: React.FC = () => {
-  const pagination = {
-    clickable: true,
-    renderBullet: function (pagination: string) {
-      return '<span class="' + pagination + '"></span>';
-    },
-  };
   const addressData = useSelector((state: StoreState) => state.address);
   const swiperRef = createRef<SwiperRef>();
   const [bannerData, setBannerData] = useState<string[]>();
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     setIsLoading(true);
     getBanners(addressData.city || "", {}).then((data) => {
@@ -30,118 +26,82 @@ const HeroCarousel: React.FC = () => {
       }
     });
   }, [addressData.city]);
-  useEffect(() => {
-    const timer = setInterval(() => {
-      swiperRef.current?.swiper.slideNext();
-    }, 5000); // 3000 milliseconds = 3 seconds
 
-    // Clear the timer when the component unmounts to prevent memory leaks.
-    return () => clearInterval(timer);
-  }, []);
   return (
-    <>
-      <Box
-        sx={{
-          width: "100%",
-          position: "relative",
-          // display: { lg: "none", xs: "block" },
-          marginLeft: { md: "50px" },
+    <Box sx={{ 
+      width: "calc(100% - 70px)", // Subtracting the width of the sidebar
+      position: "relative", 
+      margin: "0 0 0 70px", // Adding left margin to account for the sidebar
+      padding: "0 60px" 
+    }}>
+      <Swiper
+        breakpoints={{
+          360: { slidesPerView: 1 },
+          768: { slidesPerView: 1 },
+          1024: { slidesPerView: 1 },
+          1400: { slidesPerView: 1 },
         }}
+        spaceBetween={0}
+        slidesPerView={1}
+        navigation={{
+          nextEl: `.${styles.swiperButtonNext}`,
+          prevEl: `.${styles.swiperButtonPrev}`,
+        }}
+        modules={[Navigation, Autoplay]}
+        loop={true}
+        ref={swiperRef}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        className={styles.swiperContainer}
       >
-        <Swiper
-          breakpoints={{
-            360: {
-              // width: 576,
-              slidesPerView: 1,
-            },
-            768: {
-              // width: 768,
-              slidesPerView: 1,
-            },
-            1024: {
-              slidesPerView: 1,
-            },
-            1400: {
-              slidesPerView: 1,
-            },
-          }}
-          spaceBetween={0}
-          slidesPerView={1}
-          pagination={true}
-          modules={[Pagination]}
-          loop={true}
-          ref={swiperRef}
-        >
-          {bannerData && bannerData.length > 0 && !isLoading ? (
-            bannerData.map((item, index) => (
-              <SwiperSlide
-                key={index}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "90%",
-                    height: "auto",
-                    borderRadius: {
-                      md: "3rem",
-                      xs: "10px",
-                      lg: "5rem",
-                      xl: "5rem",
-                    },
-                    paddingLeft: { md: "2rem", xs: "0.5rem" },
-                  }}
-                >
-                  <Image
-                    src={item}
-                    alt="oops"
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      borderRadius: "0.5rem",
-                      objectFit: "cover",
-                      aspectRatio: "3.692307692307692",
-                    }}
-                    width={1920}
-                    height={520}
-                  />
-                </Box>
-              </SwiperSlide>
-            ))
-          ) : (
-            <>
+        {bannerData && bannerData.length > 0 && !isLoading ? (
+          bannerData.map((item, index) => (
+            <SwiperSlide key={index}>
               <Box
                 sx={{
                   width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
+                  height: "auto",
+                  borderRadius: {
+                    md: "3rem",
+                    xs: "10px",
+                    lg: "5rem",
+                    xl: "5rem",
+                  },
                 }}
               >
-                <Skeleton
-                  variant="rectangular"
-                  sx={{
-                    width: 1200,
-                    height: 100,
-                    borderRadius: {
-                      md: "10px",
-                      xs: "10px",
-                      lg: "10px",
-                      xl: "10px",
-                    },
-                    marginLeft: { md: "5.5rem", xs: "0.5rem" },
+                <Image
+                  src={item}
+                  alt="Banner"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "0.5rem",
+                    objectFit: "cover",
+                    aspectRatio: "3.692307692307692",
                   }}
+                  width={1920}
+                  height={520}
                 />
               </Box>
-            </>
-          )}
-        </Swiper>
-      </Box>
-    </>
+            </SwiperSlide>
+          ))
+        ) : (
+          <Skeleton
+            variant="rectangular"
+            sx={{
+              width: "100%",
+              height: 300,
+              borderRadius: { md: "10px", xs: "10px", lg: "10px", xl: "10px" },
+            }}
+          />
+        )}
+      </Swiper>
+      <div
+        className={`${styles.swiperButtonPrev} ${styles.swiperButton}`}
+      ></div>
+      <div
+        className={`${styles.swiperButtonNext} ${styles.swiperButton}`}
+      ></div>
+    </Box>
   );
 };
 
