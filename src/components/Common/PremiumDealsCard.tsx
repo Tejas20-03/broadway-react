@@ -30,7 +30,6 @@ import { addToCart } from "@/redux/cart/actions";
 import { add } from "lodash";
 import { addressesActions } from "@/redux/address/slice";
 
-
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({}));
@@ -44,10 +43,7 @@ interface FacebookPixelParams {
   currency: string;
 }
 
-declare const fbq: (
-  type: string,
-  eventName: string
-) => void;
+declare const fbq: (type: string, eventName: string) => void;
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -167,13 +163,6 @@ const PremiumDealsCard: React.FC<Iprops> = ({
   return (
     <>
       <Box sx={style.card} onClick={() => toggleDrawer(true)}>
-        {isNew ? (
-          <Box sx={style.serving} className="new-tag">
-            <Typography sx={{ fontSize: "12px" }} className={poppins.className}>
-              New
-            </Typography>
-          </Box>
-        ) : null}
         <Box sx={style.media}>
           {!isLoading ? (
             <Image
@@ -187,25 +176,27 @@ const PremiumDealsCard: React.FC<Iprops> = ({
           ) : (
             <Skeleton width={180} height={180} />
           )}
-          {serving && Number(serving) > 0 ? (
-            <Box sx={style.serving} className="serving-count-tag ">
+        </Box>
+        <Box sx={style.infoContainer}>
+          {discount > 0 && (
+            <Typography sx={style.saveDiscount} className={poppins.className}>
+              save {discount}%
+            </Typography>
+          )}
+          {isNew && (
+            <Typography sx={style.newTag} className={poppins.className}>
+              New
+            </Typography>
+          )}
+          {serving && Number(serving) > 0 && (
+            <Box sx={style.serving}>
               <PermIdentityOutlinedIcon style={style.user} fontSize={"small"} />
-              <Typography
-                style={style.servingtext}
-                className={poppins.className}
-              >
+              <Typography sx={style.servingText} className={poppins.className}>
                 {serving} x
               </Typography>
             </Box>
-          ) : null}
+          )}
         </Box>
-        {discount > 0 ? (
-          <Box className="discount-percentage-tag-premium">
-            <Typography className={poppins.className} sx={{ fontSize: "12px" }}>
-              save {discount}%
-            </Typography>
-          </Box>
-        ) : null}
         <Box sx={style.content}>
           {!isLoading ? (
             <Box sx={style.add}>
@@ -222,10 +213,7 @@ const PremiumDealsCard: React.FC<Iprops> = ({
 
           {!isLoading ? (
             <Box sx={style.titleBox}>
-              <Typography
-                className={poppins.className}
-                sx={style.title}
-              >
+              <Typography className={poppins.className} sx={style.title}>
                 {text}
               </Typography>
             </Box>
@@ -509,6 +497,45 @@ const style = {
     marginTop: "8px",
     fontSize: "1rem",
   },
+  infoContainer: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: "8px",
+    marginBottom: "8px",
+  },
+  saveDiscount: {
+    backgroundColor: colors.primary,
+    color: colors.white,
+    fontSize: "12px",
+    fontWeight: 600,
+    padding: "4px 8px",
+    borderRadius: "4px",
+    marginRight: "8px",
+  },
+  newTag: {
+    backgroundImage: "",
+    color: colors.white,
+    fontSize: "12px",
+    fontWeight: 600,
+    padding: "4px 8px",
+    borderRadius: "4px",
+    marginRight: "8px",
+  },
+  serving: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: colors.lightGrey,
+    borderRadius: "4px",
+    padding: "4px 8px",
+  },
+  servingText: {
+    fontSize: "12px",
+    marginLeft: "4px",
+  },
+  user: {
+    color: colors.primary,
+    fontSize: "16px",
+  },
   gap: {
     marginTop: "60px",
   },
@@ -581,26 +608,6 @@ const style = {
     color: colors.grey,
     fontSize: "0.7rem",
     margin: "4px",
-  },
-  user: {
-    color: colors.primary,
-  },
-  serving: {
-    display: "flex",
-    flexDirection: "row",
-    alignItem: "center",
-    // position: "absolute",
-
-    backgroundColor: "white",
-    borderRadius: "17px",
-    paddingY: "3px",
-    paddingX: "5px",
-    marginTop: "4px",
-  },
-  servingtext: {
-    fontWeight: 200,
-    color: colors.grey,
-    fontSize: "0.8rem",
   },
   detailsContanier: {
     display: "flex",
