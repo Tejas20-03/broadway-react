@@ -1,5 +1,10 @@
-import Contact from "@/components/Contact/Contact";
+import { CircularProgress } from "@mui/material";
+import dynamic from "next/dynamic";
 import Head from "next/head";
+
+const Contact= dynamic(() => import("@/components/Contact/Contact"), {
+  loading: () => <CircularProgress/>
+});
 
 export default function page() {
   return (

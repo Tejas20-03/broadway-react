@@ -1,6 +1,11 @@
-import PlaceOrder from "@/components/Cart/PlaceYourOrder/PlaceOrder";
+import { CircularProgress } from "@mui/material";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import React from "react";
+
+const PlaceOrder = dynamic(() => import("@/components/Cart/PlaceYourOrder/PlaceOrder"), {
+  loading: () => <CircularProgress/>
+});
 
 function page() {
   return (

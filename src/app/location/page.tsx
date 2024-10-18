@@ -1,6 +1,11 @@
 import React from "react";
-import Location from "../../components/Locations/Location";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+import { CircularProgress } from "@mui/material";
+
+const Location = dynamic(() => import("@/components/Locations/Location"), {
+  loading: () => <CircularProgress />,
+});
 
 export default function page() {
   return (

@@ -31,6 +31,8 @@ import { LocationResponse } from "@/services/location/types";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/redux/reduxStore";
 import { useRouter } from "next/navigation";
+import logo from "../../../../public/Assets/broadwayPizzaLogo.png";
+import { TiLocationArrowOutline } from "react-icons/ti";
 
 type IProps = {
   open: boolean;
@@ -139,69 +141,119 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
     <Dialog
       onClose={() => toggleDrawer(false)}
       open={addressData.modalOpen}
-      sx={{ height: "100vh" }}
-      fullScreen={window.innerWidth < 500}
+      sx={{
+        "& .MuiDialog-paper": {
+          width: "75%",
+          maxWidth: "800px",
+          height: "95%",
+          maxHeight: "850px",
+        },
+      }}
+      fullScreen={window.innerWidth < 600}
     >
       <DialogTitle
-        sx={{ cursor: "pointer" }}
-        onClick={() => toggleDrawer(false)}
+        sx={{
+          cursor: "pointer",
+          display: "flex",
+          justifyContent: "flex-end",
+          paddingRight: "16px",
+          paddingTop: "16px",
+        }}
       >
-        <CloseIcon onClick={() => toggleDrawer(false)} />
+        <IconButton onClick={() => toggleDrawer(false)} aria-label="close">
+          <CloseIcon sx={{ backgroundColor: "#e6f2ff" }} />
+        </IconButton>
       </DialogTitle>
+
+      <Box sx={{ position: "absolute", top: 16, left: 16 }}>
+        <Image src={logo} alt="Broadway Pizza Logo" width={100} height={40} />
+      </Box>
+      <Box
+        sx={{
+          padding: "16px",
+          backgroundColor: "#e6f2ff",
+          margin: "16px",
+          borderRadius: "8px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          border: "0.2px solid orange",
+        }}
+      >
+        <Box>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontWeight: "light", color: "#000", fontSize: "12px" }}
+          >
+            Selected {showOption}:
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ color: "#000", fontSize: "12px", fontWeight: "light" }}
+          >
+            {value && area ? `${value}, ${area}` : "Not selected"}
+          </Typography>
+        </Box>
+        <TiLocationArrowOutline color="orange" fontSize="28px" />
+      </Box>
       <List
         sx={{
           pt: 0,
-          height: { xs: "100%", lg: "500px" },
-          width: { sm: "100%", lg: "600px" },
+          height: "100%",
+          width: "100%",
+          overflow: "auto",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        <Box sx={style.boxDialog}>
+        <Box sx={style.optionsContainer}>
           <Box
-            sx={[style.dialogCard, showOption === "Takeaway" && style.actives]}
-            onClick={() => setShowOption("Takeaway")}
-            className={poppins.className}
-          >
-            <Image
-              className="dialogImage"
-              src={"/takeaway.png"}
-              width={70}
-              height={55}
-              alt="pps"
-            />
-            <Typography
-              sx={{ fontSize: { sm: "20px", xs: "14px" } }}
-              className={poppins.className}
-            >
-              Takeaway
-            </Typography>
-          </Box>
-          <Box
-            sx={[style.dialogCard, showOption === "Delivery" && style.actives]}
+            sx={[
+              style.optionItem,
+              showOption === "Delivery" && style.activeOption,
+              { flex: 1, justifyContent: "center" },
+            ]}
             onClick={() => setShowOption("Delivery")}
             className={poppins.className}
           >
-            <Image
-              className="dialogImage"
-              src={"/delivery.png"}
-              width={70}
-              height={55}
-              alt="pps"
-            />
-            <Typography
-              sx={{ fontSize: { sm: "20px", xs: "14px" } }}
-              className={poppins.className}
-            >
-              Delivery
-            </Typography>
+            <Box sx={style.imageContainer}>
+              <Image
+                src={"/delivery.png"}
+                width={50}
+                height={50}
+                alt="delivery"
+              />
+            </Box>
+            <Typography sx={style.optionText}>Delivery</Typography>
+          </Box>
+          <Box
+            sx={[
+              style.optionItem,
+              showOption === "Takeaway" && style.activeOption,
+              { flex: 1, justifyContent: "center" },
+            ]}
+            onClick={() => setShowOption("Takeaway")}
+            className={poppins.className}
+          >
+            <Box sx={style.imageContainer}>
+              <Image
+                src={"/takeaway.png"}
+                width={50}
+                height={50}
+                alt="takeaway"
+              />
+            </Box>
+            <Typography sx={style.optionText}>Take Away</Typography>
           </Box>
         </Box>
-        <Box className="message-important">
-          By updating your current Takeaway/Delivery selection. Your cart items
-          will be removed
-        </Box>
-        <Box sx={style.boxDialog}>
-          <Typography variant="h2" sx={style.showOptions}>
-            {showOption}
+
+        <Box sx={style.messageImportant}>
+          <Typography sx={{ color: "green", fontWeight: 300 }}>
+            Login with your profile
+          </Typography>
+          <Typography sx={{ color: "black", fontWeight: 300 }}>
+            {" "}
+            to save your address and enjoy more features!
           </Typography>
         </Box>
         {showOption === "Takeaway" && (
@@ -353,7 +405,7 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
                 router.push("/");
               }}
             >
-              SHOW MENU
+              SAVE LOCATION
             </Button>
           </Box>
         )}
@@ -738,7 +790,7 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
                 router.push("/");
               }}
             >
-              SHOW MENU
+              SAVE LOCATION
             </Button>
           </Box>
         )}
@@ -770,6 +822,12 @@ const style = {
   container: {
     maxWidth: { lg: "1400px", md: "950px" },
   },
+  messageImportant: {
+    padding: "16px",
+    textAlign: "left",
+    display: "flex",
+    fontSize: "16px",
+  },
   header: {
     width: "100%",
     padding: { md: "1rem", xs: "0px" },
@@ -779,6 +837,29 @@ const style = {
     justifyContent: "space-between",
     paddingTop: "10px !important",
   },
+  optionsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    marginBottom: "20px",
+  },
+  // optionItem: {
+  //   display: "flex",
+  //   alignItems: "center",
+  //   padding: "15px",
+  //   cursor: "pointer",
+  //   borderBottom: "2px solid transparent",
+  //   transition: "all 0.3s ease",
+  // },
+  activeOption: {
+    borderBottom: "2px solid #FFD700", // Yellow border for active option
+    backgroundColor: "rgba(255, 215, 0, 0.1)", // Light yellow background
+  },
+  // optionText: {
+  //   marginLeft: "15px",
+  //   fontSize: "18px",
+  //   fontWeight: 600,
+  // },
   searchBoxMob: {
     width: "100%",
     padding: "1rem",
@@ -800,6 +881,33 @@ const style = {
     color: colors.grey,
     fontSize: "0.7rem",
   },
+  imageContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: "10px",
+    "& img": {
+      objectFit: "contain",
+    },
+  },
+  optionImage: {
+    objectFit: "contain",
+  },
+  optionItem: {
+    display: "flex",
+    alignItems: "center",
+    padding: "15px",
+    cursor: "pointer",
+    borderBottom: "2px solid transparent",
+    transition: "all 0.3s ease",
+    justifyContent: "center",
+  },
+  optionText: {
+    marginLeft: "10px",
+    fontSize: "18px",
+    fontWeight: 600,
+  },
+
   iconColor: {
     color: colors.primary,
     width: "2em",
@@ -1043,12 +1151,12 @@ const style = {
     width: "90%",
     transition: "all ease-in-out 0.5s",
     backgroundColor: colors.primary,
-    color: colors.white,
+    color: colors.black,
     fontWeight: 700,
     paddingY: "10px",
     ":hover": {
       backgroundColor: colors.primary,
-      color: colors.white,
+      color: colors.black,
     },
   },
   showMenuBox: {
@@ -1057,5 +1165,7 @@ const style = {
     alignItems: "center",
     justifyContent: "center",
     marginY: "14px",
+    cursor: "pointer",
+    color: "#000",
   },
 };

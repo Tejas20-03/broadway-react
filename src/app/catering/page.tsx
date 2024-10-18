@@ -1,5 +1,11 @@
-import Catering from "@/components/Catering/Catering";
+import dynamic from "next/dynamic";
 import Head from "next/head";
+import { CircularProgress } from "@mui/material";
+
+
+const Catering = dynamic(() => import("@/components/Catering/Catering"), {
+  loading: () => <CircularProgress/>,
+});
 
 export default function page() {
   return (

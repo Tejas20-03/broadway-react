@@ -1,6 +1,11 @@
-import Corporate from "@/components/Corporate/Corporate";
-import Contact from "@/components/Contact/Contact";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+import { CircularProgress } from "@mui/material";
+
+
+const Corporate = dynamic(() => import("@/components/Corporate/Corporate"), {
+  loading: () => <CircularProgress/>
+});
 
 export default function page() {
   return (

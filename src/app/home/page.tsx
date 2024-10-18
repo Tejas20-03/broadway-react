@@ -1,5 +1,10 @@
-import MainHome from "@/components/Ahome/MainHome";
+import { CircularProgress } from "@mui/material";
+import dynamic from "next/dynamic";
 import Head from "next/head";
+
+const MainHome = dynamic(() => import("@/components/Ahome/MainHome"), {
+  loading: () => <CircularProgress/>
+});
 
 export default function page() {
   return (

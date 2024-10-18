@@ -1,7 +1,12 @@
 import GetAppFooter from "@/components/Common/GetAppFooter";
-import ThankYou from "@/components/ThankYou/ThankYou";
+import { CircularProgress } from "@mui/material";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import React from "react";
+
+const ThankYou = dynamic(() => import("@/components/ThankYou/ThankYou"), {
+  loading: () => <CircularProgress />,
+});
 
 function page() {
   return (

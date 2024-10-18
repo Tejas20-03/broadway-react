@@ -1,5 +1,10 @@
 import Head from "next/head";
-import Menu from "../../components/Menu/Menu";
+import dynamic from "next/dynamic";
+import { CircularProgress } from "@mui/material";
+
+const Menu = dynamic(() => import("@/components/Menu/Menu"), {
+  loading: () => <CircularProgress />,
+});
 
 export default function page() {
   return (

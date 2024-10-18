@@ -1,5 +1,10 @@
-import Franchise from "@/components/Franchise/Franchise";
+import { CircularProgress } from "@mui/material";
+import dynamic from "next/dynamic";
 import Head from "next/head";
+
+const Franchise = dynamic(() => import("@/components/Franchise/Franchise"), {
+  loading: () => <CircularProgress/>
+});
 
 export default function page() {
   return (
