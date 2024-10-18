@@ -43,10 +43,11 @@ import { addressesActions } from "@/redux/address/slice";
 import { getFeedbackOutlet } from "@/services/Feedback/services";
 import { error } from "console";
 import { AllOutletsResponseType } from "@/services/Feedback/types";
+import { TiLocationArrowOutline } from "react-icons/ti";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["500", "700"],
 });
 const Header: React.FC = () => {
   const router = useRouter();
@@ -142,7 +143,7 @@ const Header: React.FC = () => {
       <Box
         sx={{
           ...style.main,
-          height: "74px", // Add this line
+          height: "54px", // Add this line
           backgroundColor: `rgba(255, 255, 255, ${Math.min(
             scrollPosition / 400,
             0.9
@@ -160,46 +161,24 @@ const Header: React.FC = () => {
               style={{ cursor: "pointer" }}
               onClick={redirectToHome}
             />
-            {/* <Image
-              alt="main-logo"
-              src={headerImage}
-              fill={false}
-              className="headerMiddleImage"
-            /> */}
             <Box
               sx={style.headerLocationBox}
               onClick={() => toggleDrawer(true)}
             >
-              <Location />
-              <Box sx={style.locationText} onClick={() => toggleDrawer(true)}>
-                <Typography sx={style.dilveryTo} className={poppins.className}>
+              <Box sx={style.locationInfo}>
+                <TiLocationArrowOutline />
+                <Typography
+                  sx={style.selectedOption}
+                  className={poppins.className}
+                >
                   {addressData.addressType ? addressData.addressType : "Select"}
                 </Typography>
+              </Box>
+              <Box sx={style.addressType}>
                 <Typography sx={style.location} className={poppins.className}>
-                  {addressData.city ? addressData.city : "Select"}
+                  {addressData.city ? addressData.city : ""}{" "}
+                  {addressData.area || addressData.outlet || "Delivery/Pickup"}
                 </Typography>
-                {addressData.outlet && addressData.outlet.length > 0 ? (
-                  <Typography
-                    onClick={() => toggleDrawer(true)}
-                    sx={[style.outvals, style.overfloeDots]}
-                  >
-                    {addressData.outlet ? addressData.outlet : "Select"}
-                  </Typography>
-                ) : addressData.area && addressData.area.length > 0 ? (
-                  <Typography
-                    onClick={() => toggleDrawer(true)}
-                    sx={style.outvals}
-                  >
-                    {addressData.area ? addressData.area : "Select"}
-                  </Typography>
-                ) : (
-                  <Typography
-                    onClick={() => toggleDrawer(true)}
-                    sx={style.outvals}
-                  >
-                    Select ?
-                  </Typography>
-                )}
               </Box>
             </Box>
           </Box>
@@ -363,7 +342,6 @@ const style = {
     position: "sticky",
     top: 0,
     zIndex: 100,
-    // marginLeft: { md: "60px" },
     transition: "background-color 0.1s ease",
   },
   mainMob: {
@@ -399,13 +377,42 @@ const style = {
     cursor: "pointer",
     display: "flex",
     flexDirection: "row",
-    gap: { md: "1rem", sm: "0.5rem" },
+    gap: "0.5rem",
     alignItems: "center",
   },
-  locationText: {},
+  locationInfo: {
+    fontWeight: 200,
+    display: "flex",
+    flexDirection: "row",
+  },
+  selectedOption: {
+    fontWeight: 200,
+    fontSize: "0.8rem",
+  },
+  locationText: {
+    display: "flex",
+    flexDirection: "row",
+    fontStyle: "light",
+    fontSize: "13px",
+    lineHeight: "16px",
+    alignItems: "center",
+    gap: "0.5rem",
+  },
+  addressType: {
+    backgroundColor: colors.primary,
+    color: colors.black,
+    padding: "0.25rem 0.5rem",
+    borderRadius: "4px",
+    fontSize: "0.8rem",
+    fontWeight: 500,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "0.3rem",
+  },
   dilveryTo: {
     color: colors.black,
-    fontSize: "0.9rem", // Reduced from 1rem
+    fontSize: "0.9rem",
     fontStyle: "bold",
   },
   iconColor: {
@@ -414,8 +421,8 @@ const style = {
     height: "2em",
   },
   location: {
-    fontWeight: 600,
-    fontSize: "0.9rem", // Added font size
+    color: colors.black,
+    fontSize: "0.8rem", // Added font size
   },
   inputStyle: {
     "::before": { borderBottom: "0px !important" },

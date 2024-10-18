@@ -11,7 +11,7 @@ export const colors = {
   white: "white",
   card1PriceColor: "rgba(103, 103, 103, 1)",
   cardHover: "#FFC500",
-  background: "#FCF9F2",
+  background: "#fff",
   haeding: "#30334F",
   bottomCart: "#30334F",
   orderCart: "#E414AA",

@@ -13,7 +13,6 @@ import { TbLogs } from "react-icons/tb";
 import { GrCart } from "react-icons/gr";
 import { MdOutlinePersonOutline } from "react-icons/md";
 
-
 type IProps = {
   openFeedbackDialog: (value: boolean) => void;
 };
@@ -23,7 +22,7 @@ const poppins = Poppins({
   weight: ["300", "700"],
 });
 
-const ICON_SIZE = 30;
+const ICON_SIZE = 26;
 const ICON_ALT = "Navigation icon";
 
 type NavItemProps = {
@@ -34,9 +33,15 @@ type NavItemProps = {
   isActive: boolean;
 };
 
-const NavItem = ({ href, icon: Icon, title, onClick, isActive }: NavItemProps) => {
+const NavItem = ({
+  href,
+  icon: Icon,
+  title,
+  onClick,
+  isActive,
+}: NavItemProps) => {
   const cartData = useSelector((state: StoreState) => state.cart);
-  
+
   return (
     <Tooltip title={title} placement="right" arrow>
       <Box
@@ -115,6 +120,7 @@ const style = {
     padding: "0.5rem 0.5rem",
     background: "white",
     zIndex: 99,
+    boxShadow: '1px 0 2px rgba(0, 0, 0, 0.1)',
   },
   iconWrapper: {
     display: "flex",
@@ -128,8 +134,8 @@ const style = {
     flexDirection: "column",
     justifyContent: "space-between",
     height: "100%",
-    paddingTop: '20px',
-    paddingBottom: '20px',
+    paddingTop: "20px",
+    paddingBottom: "20px",
   },
   badge: {
     position: "absolute",
@@ -167,9 +173,9 @@ const style = {
     padding: "5px",
   },
   navItemsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px",
   },
 };
 

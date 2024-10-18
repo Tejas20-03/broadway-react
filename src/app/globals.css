@@ -4,20 +4,23 @@
   box-sizing: border-box;
   /* background-color: #fcf9f2; */
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 body {
   /* margin: 0px !important; */
   overflow-x: hidden !important;
   position: relative;
-  background-color: #fcf9f2 !important;
+  background-color: #fff !important;
 }
 
 .menu-image {
   width: 1000px;
   height: 2000px;
 }
+
 @media (min-width: 340px) and (max-width: 600px) {
   .menu-image {
     width: 100%;
@@ -25,6 +28,7 @@ body {
     padding-bottom: 7rem;
   }
 }
+
 @media (min-width: 340px) and (max-width: 1199px) {
   .permiumImage {
     margin-bottom: 22px;
@@ -33,14 +37,18 @@ body {
 
 @media (min-width: 1025px) {
   .headerMiddleImage {
-    display: block; /* or any other desired display property */
+    display: block;
+    /* or any other desired display property */
   }
+
   .mobSearch {
     display: none;
   }
+
   .swiper-button-prev {
     left: 50px !important;
   }
+
   .swiper-button-next {
     right: 24px !important;
   }
@@ -51,18 +59,20 @@ body {
   .headerMiddleImage {
     display: none;
   }
+
   .mobSearch {
     display: flex;
   }
 }
+
 .pagination {
   height: 10px;
   width: 50px;
   background-color: blue;
 }
-.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
-.swiper-pagination-horizontal.swiper-pagination-bullets
-  .swiper-pagination-bullet {
+
+.swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
   position: relative;
   width: 10px;
   border-radius: 3px !important;
@@ -78,34 +88,31 @@ body {
   width: 22px !important;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0) !important;
 }
+
 .swiper-backface-hidden .swiper-slide {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+
 .swiperSlide {
   width: auto !important;
 }
+
 .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
   background: #30334f !important;
 }
-.MuiTypography-root
-  .MuiTypography-body1
-  .MuiFormControlLabel-label
-  .css-ahj2mt-MuiTypography-root {
+
+.MuiTypography-root .MuiTypography-body1 .MuiFormControlLabel-label .css-ahj2mt-MuiTypography-root {
   font-size: 2rem !important;
   font-weight: 500;
   padding-top: 0.5rem;
 }
-.css-hyxlzm
-  > .MuiSvgIcon-root
-  .MuiSvgIcon-fontSizeMedium
-  .css-1hbvpl3-MuiSvgIcon-root {
+
+.css-hyxlzm>.MuiSvgIcon-root .MuiSvgIcon-fontSizeMedium .css-1hbvpl3-MuiSvgIcon-root {
   font-size: 1.3rem !important;
 }
-.swiper-pagination
-  .swiper-pagination-clickable
-  .swiper-pagination-bullets
-  .swiper-pagination-horizontal {
+
+.swiper-pagination .swiper-pagination-clickable .swiper-pagination-bullets .swiper-pagination-horizontal {
   position: relative;
   width: 10px;
   border-radius: 3px !important;
@@ -118,6 +125,7 @@ body {
   width: 22px !important;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0) !important;
 }
+
 .swiper-button-prev:after,
 .swiper-button-next:after {
   font-size: 24px !important;
@@ -128,11 +136,13 @@ body {
   align-items: center !important;
   justify-content: center !important;
 }
+
 .checkLists {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .checkLists li {
   position: relative;
   padding: 10px 0;
@@ -143,6 +153,7 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
 }
+
 .checkLists li:before {
   content: "";
   background-image: url(../../public/checkg.png);
@@ -154,6 +165,7 @@ body {
   left: 0;
   top: 3px;
 }
+
 .locationButton {
   padding: 18px 45px;
   margin-bottom: 15px;
@@ -163,6 +175,7 @@ body {
   background: #ebebeb;
   margin: 4px 2px;
 }
+
 .inputLabel {
   display: block;
   color: #000;
@@ -170,6 +183,7 @@ body {
   padding: 10px 0;
   font-weight: bold;
 }
+
 .inputLabel input {
   box-sizing: border-box;
   -webkit-appearance: none;
@@ -188,6 +202,7 @@ body {
   font-size: inherit;
   color: inherit;
 }
+
 .frenchise label {
   flex: 0 0 50%;
   padding-right: 10px;
@@ -200,23 +215,28 @@ body {
   .input-b input {
     margin-bottom: 30px;
   }
+
   .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
     width: 100% !important;
     height: 100vh !important;
     margin: 0px !important;
   }
+
   .css-hz1bth-MuiDialog-container {
     height: 123vh !important;
     justify-content: flex-start !important;
     align-items: start !important;
   }
+
   .frenchise label {
     padding-right: 0px !important;
   }
+
   .radioBtn1 {
     margin-top: 1em;
     margin-bottom: 1em;
   }
+
   .radioBtn2 {
     margin-bottom: 1em;
   }
@@ -226,6 +246,7 @@ body {
   margin-top: 10px;
   font-weight: 600;
 }
+
 .input-b input {
   display: flex;
   width: 100%;
@@ -236,6 +257,7 @@ body {
   border-radius: 6px;
   color: #3e3e3e;
 }
+
 .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   padding: 7px !important;
 }
@@ -252,6 +274,7 @@ body {
   text-decoration: none;
   color: #ffba00;
 }
+
 .inputStepper {
   height: 100%;
   width: 45px;
@@ -277,6 +300,7 @@ body {
   color: inherit;
   user-select: auto !important;
 }
+
 .dialogImage {
   width: 80px;
   margin: auto;
@@ -286,14 +310,17 @@ body {
   bottom: 0px;
   transition: all 0.3s 0.2s ease-in;
 }
+
 @media only screen and (min-width: 250px) and (max-width: 400px) {
   .dialogImage {
     width: 50px;
   }
 }
+
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
   width: 1000px !important;
 }
+
 .message-important {
   display: block;
   margin: 20px 20px -20px;
@@ -333,6 +360,7 @@ body {
   padding-right: 0px;
   margin-top: 20px;
 }
+
 .styleBoxed {
   width: 90%;
   background: white;
@@ -345,9 +373,11 @@ body {
   position: absolute;
   bottom: 0;
 }
+
 .css-cveggr-MuiListItemIcon-root {
   min-width: 22px !important;
 }
+
 .dileveryInfoLabel {
   color: #878787;
   margin-top: 15px;
@@ -363,6 +393,7 @@ body {
   appearance: none;
   border: none;
 }
+
 .smallTextMul {
   color: white;
   background-color: grey;
@@ -370,18 +401,19 @@ body {
   padding: 3px;
 }
 
-.css-hq9sbj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused
-  .MuiOutlinedInput-notchedOutline {
+.css-hq9sbj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: transparent !important;
   border-width: 0px !important;
 }
+
 .premiumDialog .MuiModal-backdrop {
   filter: blur(200px) !important;
   background-color: white !important;
   margin-left: 10%;
   margin-right: 10%;
 }
-.premiumDialog .MuiDialog-container > div {
+
+.premiumDialog .MuiDialog-container>div {
   border-radius: 22px !important;
 }
 
@@ -402,14 +434,17 @@ body {
   cursor: pointer;
   font-size: 24px;
 }
+
 .style-3::-webkit-scrollbar-track {
   /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
   background-color: #f5f5f5;
 }
+
 .style-3::-webkit-scrollbar {
   height: 7px;
   background-color: #f5f5f5;
 }
+
 .style-3::-webkit-scrollbar {
   background-color: #f5f5f5;
 }
@@ -418,6 +453,7 @@ body {
   background-color: #000000;
   border-radius: 40px;
 }
+
 @keyframes identifier {
   0% {
     top: 0;
@@ -432,11 +468,9 @@ body {
 
 .discount-percentage-tag {
   position: absolute;
-  background-image: linear-gradient(
-    109.6deg,
-    rgba(255, 180, 24, 1) 11.2%,
-    rgba(247, 49, 49, 1) 91.1%
-  );
+  background-image: linear-gradient(109.6deg,
+      rgba(255, 180, 24, 1) 11.2%,
+      rgba(247, 49, 49, 1) 91.1%);
   color: #fff;
   display: block;
   z-index: 1;
@@ -487,11 +521,9 @@ body {
 
 .discount-percentage-tag-premium {
   position: absolute;
-  background-image: linear-gradient(
-    109.6deg,
-    rgba(255, 180, 24, 1) 11.2%,
-    rgba(247, 49, 49, 1) 91.1%
-  );
+  background-image: linear-gradient(109.6deg,
+      rgba(255, 180, 24, 1) 11.2%,
+      rgba(247, 49, 49, 1) 91.1%);
   color: #fff;
   display: block;
   z-index: 1;
@@ -513,11 +545,9 @@ body {
 
 .new-tag {
   position: absolute;
-  background-image: linear-gradient(
-    109.6deg,
-    rgb(0, 184, 40) 11.2%,
-    rgb(49, 247, 92) 91.1%
-  );
+  background-image: linear-gradient(109.6deg,
+      rgb(0, 184, 40) 11.2%,
+      rgb(49, 247, 92) 91.1%);
   color: #fff;
   display: block;
   z-index: 1;
@@ -539,11 +569,9 @@ body {
 
 .new-tag-feature {
   position: absolute;
-  background-image: linear-gradient(
-    109.6deg,
-    rgb(0, 184, 40) 11.2%,
-    rgb(49, 247, 92) 91.1%
-  );
+  background-image: linear-gradient(109.6deg,
+      rgb(0, 184, 40) 11.2%,
+      rgb(49, 247, 92) 91.1%);
   color: #fff;
   display: block;
   z-index: 1;
@@ -566,6 +594,7 @@ body {
 /* Media query for mobile screens */
 @media screen and (max-width: 600px) {
   .new-tag-feature {
-    left: -150px; /* Adjust as needed */
+    left: -150px;
+    /* Adjust as needed */
   }
 }

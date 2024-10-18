@@ -90,7 +90,7 @@ const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
             scrollPosition / 400,
             0.9
           )})`,
-          top: "74px", // Adjust this value to remove the gap
+          top: "54px", // Adjust this value to remove the gap
         }}
       >
         <Container sx={style.container}>
@@ -121,17 +121,11 @@ const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
                       onClick={() => handleTabClick(item, index)}
                       sx={{
                         ...style.tabItem,
-                        // Set the active class based on the state
                         ...(activeTab === item
                           ? {
-                              // boxShadow:
-                              //   "1px 7px 19px 0px rgba(255, 197, 0, 1)",
-
                               background: colors.primary,
                             }
-                          : {
-                              backgroundColor: buttonBackgroundColor,
-                            }),
+                          : {}),
                       }}
                       key={index}
                       className={poppins.className}
@@ -176,14 +170,15 @@ const style = {
   },
   tabItem: {
     width: "auto",
-    borderRadius: "30px",
-    paddingY: "12px",
-    paddingX: "20px",
-    color: colors.dark,
+    borderRadius: "10px",
+    paddingY: "8px",
+    paddingX: "6px",
+    color: colors.black,
     fontSize: { xl: "0.8rem", lg: "0.7rem", xs: "14px" },
-    fontWeight: 500,
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    fontWeight: 300,
     marginLeft: "6px",
-
+    backgroundColor: "white",
     ":hover": {
       boxShadow: "1px 7px 19px 0px rgba(255, 197, 0, 1)",
       background: colors.primary,
