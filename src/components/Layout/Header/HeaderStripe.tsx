@@ -60,11 +60,11 @@ const NavItem = ({
         >
           <Icon size={ICON_SIZE} color={title === "Menu" ? "white" : "black"} />
         </Box>
-        {title === "Cart" && cartData.cartProducts.length > 0 && (
+        {title === "Cart" && cartData.cartProducts.length >= 0 && (
           <Box sx={style.badge}>
             <Typography
               className={poppins.className}
-              sx={{ fontSize: 12, color: "white" }}
+              sx={{ fontSize: 12, color: "black", backgroundColor: "orange" }}
             >
               {cartData.cartProducts.length}
             </Typography>
@@ -120,7 +120,7 @@ const style = {
     padding: "0.5rem 0.5rem",
     background: "white",
     zIndex: 99,
-    boxShadow: '1px 0 2px rgba(0, 0, 0, 0.1)',
+    boxShadow: "1px 0 2px rgba(0, 0, 0, 0.1)",
   },
   iconWrapper: {
     display: "flex",
@@ -141,8 +141,8 @@ const style = {
     position: "absolute",
     top: "-5px",
     right: "5px",
-    background: "black",
-    color: "white",
+    background: "orange",
+    color: "black",
     borderRadius: "50%",
     width: "20px",
     height: "20px",

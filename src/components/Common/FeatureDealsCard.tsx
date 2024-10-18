@@ -32,10 +32,30 @@ import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import { motion } from "framer-motion";
 import { addressesActions } from "@/redux/address/slice";
 
+const drawerBleeding = 56;
+
+const Root = styled("div")(({ theme }) => ({}));
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
+}));
+
+interface FacebookPixelParams {
+  value: number;
+  currency: string;
+  // Add other properties if needed
+}
+
+declare const fbq: (type: string, eventName: string) => void;
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
+
 type Iprops = {
   text: string;
   price: string;
-  background: string;
   src: string;
   discountedPrice: string;
   isLoading: boolean;
@@ -45,31 +65,10 @@ type Iprops = {
   isNew: boolean;
   description: string;
 };
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-});
-const drawerBleeding = 56;
-const Root = styled("div")(({ theme }) => ({}));
 
-const StyledBox = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
-}));
-interface FacebookPixelParams {
-  value: number;
-  currency: string;
-  // Add other properties if needed
-}
-
-declare const fbq: (
-  type: string,
-  eventName: string
-  //params: FacebookPixelParams
-) => void;
 const FeatureDealsCard: React.FC<Iprops> = ({
   text,
   price,
-  background,
   src,
   discountedPrice,
   isLoading,
@@ -87,6 +86,7 @@ const FeatureDealsCard: React.FC<Iprops> = ({
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const addressData = useSelector((state: StoreState) => state.address);
   const dispatch = useDispatch<StoreDispatch>();
+
   const toggleDrawer = (newOpen: boolean) => {
     if (!addressData.addressType) {
       setIsAddress(true);
@@ -182,109 +182,83 @@ const FeatureDealsCard: React.FC<Iprops> = ({
               src={src}
               fill={false}
               alt="oops"
-              width={window.innerWidth > 600 ? 180 : 130}
-              height={window.innerWidth > 600 ? 180 : 130}
-              style={{
-                borderRadius: "25px",
-              }}
+              width={180}
+              height={180}
+              style={style.image}
             />
           ) : (
-            <Skeleton
-              width={130}
-              // height={130}
-              sx={{
-                borderRadius: "25px",
-                height: "100%",
-              }}
-            />
+            <Skeleton width={180} height={180} />
+          )}
+        </Box>
+
+        <Box sx={style.infoContainer}>
+          {discount > 0 && (
+            <Typography sx={style.saveDiscount} className={poppins.className}>
+              save {discount}%
+            </Typography>
+          )}
+          {isNew && (
+            <Typography sx={style.newTag} className={poppins.className}>
+              New
+            </Typography>
+          )}
+          {serving && (Number(serving) > 0) && (
+            <Box sx={style.serving}>
+              <PermIdentityOutlinedIcon style={style.user} fontSize={"small"} />
+              <Typography sx={style.servingText} className={poppins.className}>
+                {serving} x
+              </Typography>
+            </Box>
           )}
         </Box>
 
         <Box sx={style.content}>
-          {isNew ? (
-            <Box className="new-tag-feature">
-              <Typography
-                sx={{ fontSize: "12px" }}
-                className={poppins.className}
-              >
-                New
-              </Typography>
-            </Box>
-          ) : null}
-          <Box sx={style.add}>
-            {!isLoading ? (
+          {!isLoading ? (
+            <Box sx={style.add}>
               <Box sx={style.addBox}>
                 <AddIcon sx={{ color: "white" }} />
               </Box>
-            ) : (
-              <Box
-                sx={[
-                  style.addBox,
-                  { background: "grey !important", opacity: 0.5 },
-                ]}
-              >
-                <Skeleton
-                  variant="circular"
-                  sx={{ width: "100%", height: "100%" }}
-                />
-              </Box>
-            )}
-          </Box>
+            </Box>
+          ) : (
+            <Box sx={style.add}>
+              {" "}
+              <Skeleton />{" "}
+            </Box>
+          )}
 
-          <Box sx={style.titleBox}>
-            {!isLoading ? (
-              <Typography
-                sx={{ ...style.title, backgroundColor: background }}
-                className={poppins.className}
-              >
+          {!isLoading ? (
+            <Box sx={style.titleBox}>
+              <Typography className={poppins.className} sx={style.title}>
                 {text}
               </Typography>
-            ) : (
-              <Skeleton width={"100%"} height={3} />
-            )}
-          </Box>
-          <Box sx={style.detailsContanier}>
-            {discount > 0 ? (
-              <Box className="discount-percentage-tag">
-                <Typography
-                  className={poppins.className}
-                  sx={{ fontSize: "12px" }}
-                >
-                  save {discount}%
-                </Typography>
-              </Box>
-            ) : null}
-            {serving && Number(serving) > 0 ? (
-              <Box sx={style.serving} className="serving-count-tag ">
-                <Typography
-                  style={style.servingtext}
-                  className={poppins.className}
-                >
-                  {serving}x
-                </Typography>
-                <PermIdentityOutlinedIcon
-                  style={style.user}
-                  fontSize={"small"}
-                />
-              </Box>
-            ) : null}
-          </Box>
-          {description !== "" && window.innerWidth > 600 && (
+            </Box>
+          ) : (
+            <Box sx={style.titleBox}>
+              <Skeleton sx={{ width: "100%" }} />{" "}
+            </Box>
+          )}
+          {description !== "" && (
             <Typography
               className={poppins.className}
               dangerouslySetInnerHTML={{ __html: description }}
               sx={style.discription}
             />
           )}
+
           {!isLoading ? (
             <Box sx={style.priceContanier}>
-              {Number(discountedPrice) > 0 && (
+              {Number(discountedPrice) > 0 ? (
                 <Typography
                   sx={style.discountedPrice}
                   className={poppins.className}
                 >
                   Rs.{discountedPrice}
                 </Typography>
+              ) : (
+                <Typography
+                  sx={style.gap}
+                  className={poppins.className}
+                ></Typography>
               )}
               {Number(price || 0) > 0 ? (
                 <Typography
@@ -296,7 +270,10 @@ const FeatureDealsCard: React.FC<Iprops> = ({
               ) : null}
             </Box>
           ) : (
-            <Skeleton sx={style.priceContanier} />
+            <Box sx={style.priceContanier}>
+              {" "}
+              <Skeleton sx={{ width: "100%" }} />{" "}
+            </Box>
           )}
         </Box>
       </Box>
@@ -496,44 +473,90 @@ export default FeatureDealsCard;
 const style = {
   card: {
     display: "flex",
-    flexDirection: "row",
-    borderRadius: "20px",
-    boxShadow: "0px 15px 22px 0px rgba(0, 0, 0, 0.09)",
-    marginLeft: { md: "2rem" },
+    flexDirection: "column",
+    padding: "10px",
+    borderRadius: "1rem",
+    boxShadow: " 0px 15px 22px 0px rgba(0, 0, 0, 0.09)",
+    justifyContent: "center",
+    margin: "4px",
     transition: "transform 0.3s ease",
     ":hover": {
-      transform: { md: "scale(1.05)", sx: "scale(1)" },
+      transform: "scale(1.05)",
     },
+    marginTop: "6px",
     backgroundColor: colors.white,
-    maxWidth: {
-      xs: "370px",
-      lg: "510px",
-    },
-    paddingLeft: "4px",
-    paddingTop: "20px",
-    paddingBottom: "12px",
-    paddingRight: "10px",
-    minWidth: "330px",
+    cursor: "pointer",
+    position: "relative",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    borderRadius: "25px",
   },
   media: {
-    display: "flex",
-
-    alignItems: "center",
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    borderRadius: "1rem",
+    // marginBottom: "0.1rem",
   },
   actualPrice: {
     fontWeight: 400,
     textDecorationLine: "line-through",
-    color: colors.redCut,
-    marginTop: "16px",
+    marginTop: "14px",
     fontSize: "0.8rem",
-
     textAlign: "flex-end",
     marginLeft: "2px",
+    color: colors.redCut,
   },
   discountedPrice: {
     fontWeight: 600,
     marginTop: "8px",
     fontSize: "1rem",
+  },
+  infoContainer: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: "8px",
+    marginBottom: "8px",
+  },
+  saveDiscount: {
+    backgroundColor: colors.primary,
+    color: colors.white,
+    fontSize: "12px",
+    fontWeight: 600,
+    padding: "4px 8px",
+    borderRadius: "4px",
+    marginRight: "8px",
+  },
+  newTag: {
+    backgroundColor: "green",
+    color: colors.white,
+    fontSize: "12px",
+    fontWeight: 600,
+    padding: "4px 8px",
+    borderRadius: "4px",
+    marginRight: "8px",
+    transition: "transform 0.3s ease",
+    
+  },
+  serving: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: colors.lightGrey,
+    borderRadius: "4px",
+    padding: "4px 8px",
+  },
+  servingText: {
+    fontSize: "12px",
+    marginLeft: "4px",
+  },
+  user: {
+    color: colors.primary,
+    fontSize: "16px",
+  },
+  gap: {
+    marginTop: "60px",
   },
   text: {
     paddingY: "1rem",
@@ -542,20 +565,17 @@ const style = {
     // width: "100%", // Change to 100% for mobile
   },
   content: {
-    marginLeft: "0.5rem",
-    marginTop: "0.5rem",
+    // marginTop: "0.5rem",
     position: "relative",
     width: "100%",
-    paddingRight: "10px",
   },
   title: {
-    paddingY: { xs: "5px", md: "0.5rem" },
-    width: "100%",
-    paddingLeft: "6px",
-    textAlign: "center",
+    paddingY: "8px",
+    paddingLeft: "13px",
+    textAlign: "flex-start",
     fontWeight: 700,
     borderRadius: 5,
-    paddingRight: "10px",
+    fontSize: "12px",
   },
   titleBox: {
     borderRadius: "20px",
@@ -563,8 +583,8 @@ const style = {
   },
   add: {
     position: "absolute",
-    bottom: 0,
-    right: 0,
+    bottom: 1,
+    right: 1,
   },
   addBox: {
     backgroundColor: colors.primary,
@@ -592,14 +612,6 @@ const style = {
     "100%": {
       transform: "scale(1)", // Return to initial scale
     },
-  },
-  user: {
-    color: colors.primary,
-  },
-  serving: {
-    display: "flex",
-    flexDirection: "row",
-    alignItem: "center",
   },
   servingtext: {
     fontWeight: 200,

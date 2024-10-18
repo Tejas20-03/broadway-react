@@ -14,6 +14,7 @@ body {
   overflow-x: hidden !important;
   position: relative;
   background-color: #fff !important;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .menu-image {
@@ -596,5 +597,17 @@ body {
   .new-tag-feature {
     left: -150px;
     /* Adjust as needed */
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
   }
 }

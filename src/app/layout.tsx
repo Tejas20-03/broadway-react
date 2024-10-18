@@ -35,7 +35,7 @@ export default function RootLayout({
     <>
       <Providers>
         <html lang="en">
-          <body className={`${poppins.variable}`}>
+        <body className={`${poppins.className} ${poppins.variable}`}>
             <NextTopLoader color={colors.primary} height={6} />
             <Header />
             {children}

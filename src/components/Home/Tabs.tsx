@@ -105,12 +105,6 @@ const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
           >
             {!isLoading && tabs ? (
               tabs?.map((item, index) => {
-                const buttonBackgroundColor =
-                  index === 0
-                    ? colors.tab1
-                    : index % 2 === 0
-                    ? colors.tab2
-                    : colors.tab3;
                 return (
                   <SwiperSlide
                     data-hash={item}
@@ -187,4 +181,5 @@ const style = {
   },
   swiper: { paddingBottom: "16px" },
   link: { textDecoration: "none", color: "inherit" },
+  textTransform:"capitalize"
 };

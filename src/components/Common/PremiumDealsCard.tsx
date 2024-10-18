@@ -511,15 +511,17 @@ const style = {
     padding: "4px 8px",
     borderRadius: "4px",
     marginRight: "8px",
+    animation: "bounce 1.5s infinite",
   },
   newTag: {
-    backgroundImage: "",
+    backgroundColor: "green",
     color: colors.white,
     fontSize: "12px",
     fontWeight: 600,
     padding: "4px 8px",
     borderRadius: "4px",
     marginRight: "8px",
+    animation: "bounce 1.5s infinite",
   },
   serving: {
     display: "flex",
