@@ -34,11 +34,16 @@ const FeatureDeals: React.FC<Iprops> = ({ data = [], heading, isLoading }) => {
               sx={{
                 marginLeft: { lg: "1rem", xs: "0px" },
                 marginTop: "12px",
-                width: "100%", // Change this to 100%
-                overflow: "hidden",
+                maxWidth: {
+                  xl: "1400px",
+                  lg: "1000px",
+                  md: "900px",
+                  sm: "600px",
+                  xs: "400px",
+                },
               }}
             >
-              <Grid container spacing={2} sx={{ width: "100%" }}>
+              <Grid container spacing={2}>
                 {data &&
                   data.filter((item) =>
                     item.Name.toLowerCase().includes(
@@ -53,7 +58,7 @@ const FeatureDeals: React.FC<Iprops> = ({ data = [], heading, isLoading }) => {
                     )
                     .map((item, index) => {
                       return (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                        <Grid item xs={6} sm={6} md={3} key={index}>
                           <PremiumDealsCard
                             isLoading={isLoading}
                             text={item.Name}

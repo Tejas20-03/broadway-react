@@ -76,7 +76,7 @@ export default function Home() {
             display: { md: "none" },
           }}
         >
-          <GetApp />
+          <GetApp showFullContent={false} />
         </Box>
       )}
       {menu?.map((item, index) => (
@@ -104,7 +104,7 @@ export default function Home() {
             display: { md: "none" },
           }}
         >
-          <GetApp />
+          <GetApp showFullContent={true} />
         </Box>
       )}
       <Box sx={{ paddingBottom: 12 }}></Box>

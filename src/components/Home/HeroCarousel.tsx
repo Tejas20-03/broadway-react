@@ -28,18 +28,20 @@ const HeroCarousel: React.FC = () => {
   }, [addressData.city]);
 
   return (
-    <Box sx={{ 
-      width: "calc(100% - 70px)", // Subtracting the width of the sidebar
-      position: "relative", 
-      margin: "0 0 0 70px", // Adding left margin to account for the sidebar
-      padding: "0 60px" 
-    }}>
+    <Box
+      sx={{
+        width: { xs: "100%", md: "calc(100% - 70px)" },
+        position: "relative",
+        margin: { xs: "0", md: "0 0 0 70px" },
+        padding: { xs: "0 20px", md: "0 60px" },
+      }}
+    >
       <Swiper
         breakpoints={{
-          360: { slidesPerView: 1 },
-          768: { slidesPerView: 1 },
-          1024: { slidesPerView: 1 },
-          1400: { slidesPerView: 1 },
+          360: { slidesPerView: 1, spaceBetween: 10 },
+          768: { slidesPerView: 1, spaceBetween: 20 },
+          1024: { slidesPerView: 1, spaceBetween: 30 },
+          1400: { slidesPerView: 1, spaceBetween: 40 },
         }}
         spaceBetween={0}
         slidesPerView={1}
@@ -75,11 +77,11 @@ const HeroCarousel: React.FC = () => {
                     width: "100%",
                     height: "auto",
                     borderRadius: "0.5rem",
-                    objectFit: "cover",
-                    aspectRatio: "3.692307692307692",
+                    objectFit: "contain",
                   }}
                   width={1920}
                   height={520}
+                  layout="responsive"
                 />
               </Box>
             </SwiperSlide>
@@ -89,8 +91,8 @@ const HeroCarousel: React.FC = () => {
             variant="rectangular"
             sx={{
               width: "100%",
-              height: 300,
-              borderRadius: { md: "10px", xs: "10px", lg: "10px", xl: "10px" },
+              height: { xs: 200, sm: 250, md: 300 },
+              borderRadius: "10px",
             }}
           />
         )}

@@ -24,6 +24,49 @@ import { StoreDispatch, StoreState } from "@/redux/reduxStore";
 import { addressesActions } from "@/redux/address/slice";
 import { useParams, usePathname } from "next/navigation";
 import { Poppins } from "next/font/google";
+import { IoHomeOutline, IoMenu } from "react-icons/io5";
+import { BsPin } from "react-icons/bs";
+import { TbLogs } from "react-icons/tb";
+import { GrCart } from "react-icons/gr";
+import { MdOutlinePersonOutline } from "react-icons/md";
+
+const NavItem = ({ href, icon: Icon, title, onClick }: any) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+  const cartData = useSelector((state: StoreState) => state.cart);
+
+  return (
+    <Box>
+      <Box
+        component={onClick ? "div" : Link}
+        href={href}
+        onClick={onClick}
+        sx={{
+          ...style.iconStyle,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          backgroundColor:
+            title === "Menu" ? "black" : isActive ? "orange" : "gray",
+        }}
+      >
+        <Icon size={26} color={isActive ? "black" : "white"} />
+        {title === "Cart" && cartData.cartProducts.length > 0 && (
+          <Box sx={style.badge}>
+            <Typography className={poppins.className}>
+              {cartData.cartProducts.length}
+            </Typography>
+          </Box>
+        )}
+      </Box>
+      {title !== "Menu" && (
+        <Typography variant="caption" sx={{ color: "white", mt: 0.5 }}>
+          {title}
+        </Typography>
+      )}
+    </Box>
+  );
+};
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -71,7 +114,7 @@ const ModbileScreenInput: React.FC<IProps> = ({ openFeedbackDialog }) => {
     <>
       <Box sx={style.mainMob} className="mobSearch">
         <Container sx={style.container}>
-          <Box sx={style.searchBoxMob}>
+          {/* <Box sx={style.searchBoxMob}>
             <Sort onClick={handleNavbar(true)} sx={{ cursor: "pointer" }} />
             <Input
               placeholder="Type Your Search Here"
@@ -89,7 +132,7 @@ const ModbileScreenInput: React.FC<IProps> = ({ openFeedbackDialog }) => {
                 )
               }
             />
-          </Box>
+          </Box> */}
           <Box
             sx={{
               ...style.mobNavBar,
@@ -97,111 +140,20 @@ const ModbileScreenInput: React.FC<IProps> = ({ openFeedbackDialog }) => {
             }}
           >
             <Box sx={style.subContainer}>
-              <Box
-                sx={{
-                  ...style.iconStyle,
-                  backgroundColor:
-                    pathname === "/" ? "#FFC700 !important" : "#252E1C",
-                  width: "40px",
-                  height: "40px",
-                }}
-              >
-                <Link href={"/"} style={{ textDecoration: "none" }}>
-                  <Image
-                    onClick={() => setActive("home")}
-                    src="/home.svg"
-                    width={26}
-                    height={26}
-                    alt="oops home"
-                  />
-                </Link>
-              </Box>
-              <Box
-                sx={{
-                  ...style.iconStyle,
-                  backgroundColor:
-                    pathname === "/menu" ? "#FFC700 !important" : "#252E1C",
-                  width: "40px",
-                  height: "40px",
-                }}
-              >
-                <Link href={"/menu"} style={{ textDecoration: "none" }}>
-                  <Image
-                    onClick={() => setActive("search")}
-                    src="/icons/shopWhite.png"
-                    width={26}
-                    height={26}
-                    alt="oops home"
-                  />
-                </Link>
-              </Box>
-              <Box
-                sx={{
-                  ...style.iconStyle,
-                  backgroundColor:
-                    pathname === "/cart" ? "#FFC700 !important" : "#252E1C",
-                  width: "40px",
-                  height: "40px",
-                }}
-              >
-                <Box sx={{ position: "relative" }}>
-                  <Link href={"/cart"} style={{ textDecoration: "none" }}>
-                    <Image
-                      onClick={() => setActive("cart")}
-                      src="/Vector.svg"
-                      width={24}
-                      height={24}
-                      alt="oops home"
-                    />
-                    {cartData.cartProducts.length > 0 && (
-                      <Box sx={style.badge}>
-                        <Typography className={poppins.className}>
-                          {cartData.cartProducts.length}
-                        </Typography>
-                      </Box>
-                    )}
-                  </Link>
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  ...style.iconStyle,
-                  backgroundColor: "#252E1C",
-                  width: "40px",
-                  height: "40px",
-                }}
-              >
-                <Image
-                  src="/feedback.png"
-                  width={26}
-                  height={26}
-                  alt="oops home"
-                  onClick={() => {
-                    openFeedbackDialog(true);
-
-                    setActive("fvrt");
-                  }}
-                />
-              </Box>
-              <Box
-                sx={{
-                  ...style.iconStyle,
-                  backgroundColor:
-                    pathname === "/location" ? "#FFC700 !important" : "#252E1C",
-                  width: "40px",
-                  height: "40px",
-                }}
-              >
-                <Link href={"/location"} style={{ textDecoration: "none" }}>
-                  <Image
-                    onClick={() => setActive("heart")}
-                    src="/icons/pin.png"
-                    width={26}
-                    height={26}
-                    alt="oops home"
-                  />
-                </Link>
-              </Box>
+              <NavItem href="/menu" icon={IoMenu} title="Menu" />
+              <NavItem href="/" icon={IoHomeOutline} title="Order" />
+              <NavItem href="/cart" icon={GrCart} title="Cart" />
+              <NavItem
+                onClick={() => openFeedbackDialog(true)}
+                icon={TbLogs}
+                title="Feedback"
+              />
+              <NavItem href="/location" icon={BsPin} title="Location" />
+              <NavItem
+                href="/profile"
+                icon={MdOutlinePersonOutline}
+                title="Profile"
+              />
             </Box>
           </Box>
         </Container>
@@ -403,7 +355,7 @@ const style = {
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.background,
+    backgroundColor: "transparent",
   },
   container: {
     maxWidth: { lg: "1400px", md: "950px" },
@@ -427,7 +379,7 @@ const style = {
     fontSize: "12px",
     paddingX: "16px",
     "::after": { borderBottom: "0px !important" },
-    backgroundColor: colors.white,
+    backgroundColor: "grey",
   },
   mobNavBar: {
     position: "fixed",
@@ -450,7 +402,8 @@ const style = {
     justifyContent: "space-around",
     width: "100%",
     marginX: "0.5rem",
-    backgroundColor: "#252E1C",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    backdropFilter: "blur(5px)",
     borderRadius: "20rem",
     padding: "0.5rem",
     filter: "drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25))",
@@ -460,11 +413,12 @@ const style = {
     height: "40px",
     width: "40px",
     display: "flex",
-    alignItems: "Center",
+    alignItems: "center",
     justifyContent: "center",
     borderRadius: "50%",
-    backgroundColor: "#252E1C",
+    backgroundColor: "gray", // Remove background color
   },
+
   badge: {
     position: "absolute",
     top: "-12px",

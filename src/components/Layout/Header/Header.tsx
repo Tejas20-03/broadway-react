@@ -387,7 +387,7 @@ const style = {
   },
   selectedOption: {
     fontWeight: 200,
-    fontSize: "0.8rem",
+    fontSize: { xs: "0.7rem", sm: "0.8rem" },
   },
   locationText: {
     display: "flex",
@@ -401,15 +401,16 @@ const style = {
   addressType: {
     backgroundColor: colors.primary,
     color: colors.black,
-    padding: "0.25rem 0.5rem",
+    padding: { xs: "0.2rem 0.4rem", sm: "0.25rem 0.5rem" },
     borderRadius: "4px",
-    fontSize: "0.8rem",
+    fontSize: { xs: "0.7rem", sm: "0.8rem" },
     fontWeight: 500,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     gap: "0.3rem",
   },
+  
   dilveryTo: {
     color: colors.black,
     fontSize: "0.9rem",
@@ -422,7 +423,7 @@ const style = {
   },
   location: {
     color: colors.black,
-    fontSize: "0.8rem", // Added font size
+    fontSize: { xs: "0.7rem", sm: "0.8rem" },
   },
   inputStyle: {
     "::before": { borderBottom: "0px !important" },

@@ -168,8 +168,8 @@ const style = {
     paddingY: "8px",
     paddingX: "6px",
     color: colors.black,
-    fontSize: { xl: "0.8rem", lg: "0.7rem", xs: "14px" },
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    fontSize: { xl: "0.6rem", lg: "0.5rem", xs: "12px" },
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     fontWeight: 300,
     marginLeft: "6px",
     backgroundColor: "white",
@@ -181,5 +181,5 @@ const style = {
   },
   swiper: { paddingBottom: "16px" },
   link: { textDecoration: "none", color: "inherit" },
-  textTransform:"capitalize"
+  textTransform: "lowercase",
 };

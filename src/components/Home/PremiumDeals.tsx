@@ -52,7 +52,7 @@ const PremiumDeals: React.FC<Iprops> = ({ data = [], heading, isLoading }) => {
                   )
                   .map((item, index) => {
                     return (
-                      <Grid xs={12} sm={6} md={3} key={index}>
+                      <Grid xs={6} sm={6} md={3} key={index}>
                         <PremiumDealsCard
                           isLoading={isLoading}
                           key={index}
