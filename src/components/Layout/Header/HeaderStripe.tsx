@@ -151,6 +151,7 @@ const style = {
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
+    animation: "bounce 1.5s infinite",
   },
   iconImage: { padding: 4 },
   itemContainer: {

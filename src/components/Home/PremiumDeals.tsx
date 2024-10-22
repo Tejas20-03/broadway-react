@@ -28,7 +28,7 @@ const PremiumDeals: React.FC<Iprops> = ({ data = [], heading, isLoading }) => {
               marginLeft: { lg: "1rem", xs: "0px" },
               marginTop: "12px",
               maxWidth: {
-                xl: "1400px",
+                xl: "1300px",
                 lg: "1000px",
                 md: "900px",
                 sm: "600px",
@@ -52,7 +52,7 @@ const PremiumDeals: React.FC<Iprops> = ({ data = [], heading, isLoading }) => {
                   )
                   .map((item, index) => {
                     return (
-                      <Grid xs={6} sm={6} md={3} key={index}>
+                      <Grid xs={6} sm={4} md={3} key={index}>
                         <PremiumDealsCard
                           isLoading={isLoading}
                           key={index}

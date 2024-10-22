@@ -11,7 +11,6 @@ import {
 import { colors } from "../../constant/Colors";
 import Image from "next/image";
 import AddIcon from "@mui/icons-material/Add";
-import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import { Poppins } from "next/font/google";
 import { Global } from "@emotion/react";
 import { styled } from "@mui/material/styles";
@@ -29,6 +28,8 @@ import { StoreDispatch, StoreState } from "@/redux/reduxStore";
 import { addToCart } from "@/redux/cart/actions";
 import { add } from "lodash";
 import { addressesActions } from "@/redux/address/slice";
+//@ts-ignore
+import { Person } from 'framework7-icons/react'
 
 const drawerBleeding = 56;
 
@@ -178,50 +179,52 @@ const PremiumDealsCard: React.FC<Iprops> = ({
           )}
         </Box>
         <Box sx={style.infoContainer}>
-          {discount > 0 && (
-            <Typography sx={style.saveDiscount} className={poppins.className}>
-              save {discount}%
-            </Typography>
-          )}
-          {isNew && (
-            <Typography sx={style.newTag} className={poppins.className}>
-              New
-            </Typography>
-          )}
-          {serving && Number(serving) > 0 && (
-            <Box sx={style.serving}>
-              <PermIdentityOutlinedIcon style={style.user} fontSize={"small"} />
-              <Typography sx={style.servingText} className={poppins.className}>
-                {serving} x
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            {discount > 0 && (
+              <Typography sx={style.saveDiscount} className={poppins.className}>
+                save {discount}%
               </Typography>
-            </Box>
-          )}
+            )}
+            {isNew && (
+              <Typography sx={style.newTag} className={poppins.className}>
+                New!
+              </Typography>
+            )}
+            {serving && Number(serving) > 0 && (
+              <Box sx={style.serving}>
+                <Person style={style.user} fontSize={"small"} />
+                <Typography sx={style.servingText} className={poppins.className}>
+                  x {serving}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+          <Box sx={style.priceContanier}>
+            {Number(discountedPrice) > 0 && (
+              <Typography sx={style.discountedPrice} className={poppins.className}>
+                Rs.{discountedPrice}
+              </Typography>
+            )}
+            {Number(price || 0) > 0 && (
+              <Typography sx={style.actualPrice} className={poppins.className}>
+                Rs.{price}
+              </Typography>
+            )}
+          </Box>
+        </Box>
+        <Box sx={style.addButtonContainer}>
+          <Box sx={style.titleBox}>
+            <Typography className={poppins.className} sx={style.title}>
+              {text}
+            </Typography>
+          </Box>
+          <Box sx={style.addBox}>
+            <AddIcon sx={{ color: "black" }} />
+          </Box>
         </Box>
         <Box sx={style.content}>
-          {!isLoading ? (
-            <Box sx={style.add}>
-              <Box sx={style.addBox}>
-                <AddIcon sx={{ color: "white" }} />
-              </Box>
-            </Box>
-          ) : (
-            <Box sx={style.add}>
-              {" "}
-              <Skeleton />{" "}
-            </Box>
-          )}
 
-          {!isLoading ? (
-            <Box sx={style.titleBox}>
-              <Typography className={poppins.className} sx={style.title}>
-                {text}
-              </Typography>
-            </Box>
-          ) : (
-            <Box sx={style.titleBox}>
-              <Skeleton sx={{ width: "100%" }} />{" "}
-            </Box>
-          )}
+
           {description !== "" && (
             <Typography
               className={poppins.className}
@@ -229,39 +232,8 @@ const PremiumDealsCard: React.FC<Iprops> = ({
               sx={style.discription}
             />
           )}
-
-          {!isLoading ? (
-            <Box sx={style.priceContanier}>
-              {Number(discountedPrice) > 0 ? (
-                <Typography
-                  sx={style.discountedPrice}
-                  className={poppins.className}
-                >
-                  Rs.{discountedPrice}
-                </Typography>
-              ) : (
-                <Typography
-                  sx={style.gap}
-                  className={poppins.className}
-                ></Typography>
-              )}
-              {Number(price || 0) > 0 ? (
-                <Typography
-                  sx={style.actualPrice}
-                  className={poppins.className}
-                >
-                  Rs.{price}
-                </Typography>
-              ) : null}
-            </Box>
-          ) : (
-            <Box sx={style.priceContanier}>
-              {" "}
-              <Skeleton sx={{ width: "100%" }} />{" "}
-            </Box>
-          )}
         </Box>
-      </Box>
+      </Box >
       <Root sx={{ display: { lg: "none", xs: "block" } }}>
         <CssBaseline />
         <Global
@@ -278,7 +250,7 @@ const PremiumDealsCard: React.FC<Iprops> = ({
             anchor="bottom"
             open={open}
             onClose={() => toggleDrawer(false)}
-            onOpen={() => {}}
+            onOpen={() => { }}
             swipeAreaWidth={drawerBleeding}
             disableSwipeToOpen={false}
             ModalProps={{
@@ -333,39 +305,41 @@ const PremiumDealsCard: React.FC<Iprops> = ({
 
       {/* large screen PremiumDeals */}
 
-      {open && (
-        <Dialog
-          fullWidth={true}
-          className="premiumDialog"
-          sx={{
-            display: { lg: "block", xs: "none" },
-            borderRadius: 30,
-            marginX: "15%",
-          }}
-          open={open}
-          // TransitionComponent={Transition}
-          // keepMounted
-          onClose={() => {
-            toggleDrawer(false);
-          }}
-          disableScrollLock={false}
-          aria-describedby="alert-dialog-slide-description"
-          maxWidth={false}
-        >
-          {data && (
-            <Premium
-              onClick={() => setOpen(false)}
-              id={id}
-              data={data}
-              setData={setData}
-              setProductId={setProductId}
-              productId={productId}
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-            />
-          )}
-        </Dialog>
-      )}
+      {
+        open && (
+          <Dialog
+            fullWidth={true}
+            className="premiumDialog"
+            sx={{
+              display: { lg: "block", xs: "none" },
+              borderRadius: 30,
+              marginX: "15%",
+            }}
+            open={open}
+            // TransitionComponent={Transition}
+            // keepMounted
+            onClose={() => {
+              toggleDrawer(false);
+            }}
+            disableScrollLock={false}
+            aria-describedby="alert-dialog-slide-description"
+            maxWidth={false}
+          >
+            {data && (
+              <Premium
+                onClick={() => setOpen(false)}
+                id={id}
+                data={data}
+                setData={setData}
+                setProductId={setProductId}
+                productId={productId}
+                selectedIndex={selectedIndex}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
+          </Dialog>
+        )
+      }
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={openSnackbar}
@@ -384,70 +358,72 @@ const PremiumDealsCard: React.FC<Iprops> = ({
           Product Added To Cart!
         </Alert>
       </Snackbar>
-      {isAddress && (
-        <Modal
-          // className="premiumDialog"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          open={isAddress}
-          onClose={() => setIsAddress(false)}
-          disableAutoFocus
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box
+      {
+        isAddress && (
+          <Modal
+            // className="premiumDialog"
             sx={{
-              background: "white",
-              borderRadius: 2,
               display: "flex",
-              flexDirection: "column",
               alignItems: "center",
+              justifyContent: "center",
             }}
+            open={isAddress}
+            onClose={() => setIsAddress(false)}
+            disableAutoFocus
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
           >
-            <Typography
-              className={poppins.className}
-              sx={{
-                fontWeight: 700,
-                textAlign: "left",
-                padding: "20px",
-                color: colors.black,
-                alignSelf: "start",
-              }}
-            >
-              ERROR
-            </Typography>
-            <Typography
-              className={poppins.className}
-              sx={{
-                fontWeight: 700,
-                textAlign: "center",
-                padding: "20px",
-                color: colors.primary,
-              }}
-            >
-              Please select your city and area from location first
-            </Typography>
             <Box
               sx={{
-                paddingY: "4px",
-                width: "100%",
+                background: "white",
+                borderRadius: 2,
                 display: "flex",
-                justifyContent: "flex-end",
-              }}
-              onClick={() => {
-                setIsAddress(false);
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
-              <Button sx={{ color: colors.primary, fontSize: "1rem" }}>
-                OK
-              </Button>
+              <Typography
+                className={poppins.className}
+                sx={{
+                  fontWeight: 700,
+                  textAlign: "left",
+                  padding: "20px",
+                  color: colors.black,
+                  alignSelf: "start",
+                }}
+              >
+                ERROR
+              </Typography>
+              <Typography
+                className={poppins.className}
+                sx={{
+                  fontWeight: 700,
+                  textAlign: "center",
+                  padding: "20px",
+                  color: colors.primary,
+                }}
+              >
+                Please select your city and area from location first
+              </Typography>
+              <Box
+                sx={{
+                  paddingY: "4px",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+                onClick={() => {
+                  setIsAddress(false);
+                }}
+              >
+                <Button sx={{ color: colors.primary, fontSize: "1rem" }}>
+                  OK
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </Modal>
-      )}
+          </Modal>
+        )
+      }
     </>
   );
 };
@@ -457,7 +433,7 @@ const style = {
   card: {
     display: "flex",
     flexDirection: "column",
-    padding: "10px",
+    padding: "8px",
     borderRadius: "1rem",
     boxShadow: " 0px 15px 22px 0px rgba(0, 0, 0, 0.09)",
     justifyContent: "center",
@@ -471,10 +447,17 @@ const style = {
     cursor: "pointer",
     position: "relative",
   },
+  addButtonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: "8px",
+  },
+
   image: {
     width: "100%",
     height: "100%",
-    borderRadius: "25px",
+    borderRadius: "16px",
   },
   media: {
     position: "relative",
@@ -500,6 +483,7 @@ const style = {
   infoContainer: {
     display: "flex",
     alignItems: "center",
+    justifyContent: "space-between",
     marginTop: "8px",
     marginBottom: "8px",
   },
@@ -514,10 +498,10 @@ const style = {
     animation: "bounce 1.5s infinite",
   },
   newTag: {
-    backgroundColor: "green",
+    backgroundColor: "#1F9226",
     color: colors.white,
     fontSize: "12px",
-    fontWeight: 600,
+    fontWeight: 400,
     padding: "4px 8px",
     borderRadius: "4px",
     marginRight: "8px",
@@ -526,17 +510,17 @@ const style = {
   serving: {
     display: "flex",
     alignItems: "center",
-    backgroundColor: colors.lightGrey,
+    backgroundColor: "#d3e9f5",
     borderRadius: "4px",
-    padding: "4px 8px",
+    padding: "2px 4px",
   },
   servingText: {
-    fontSize: "12px",
+    fontSize: "8px",
     marginLeft: "4px",
   },
   user: {
-    color: colors.primary,
-    fontSize: "16px",
+    color: colors.black,
+    fontSize: "12px",
   },
   gap: {
     marginTop: "60px",
@@ -553,11 +537,10 @@ const style = {
   },
   title: {
     paddingY: "8px",
-    paddingLeft: "13px",
     textAlign: "flex-start",
-    fontWeight: 700,
+    fontWeight: 600,
     borderRadius: 5,
-    fontSize: "12px",
+    fontSize: "18px",
   },
   titleBox: {
     borderRadius: "20px",
@@ -620,8 +603,7 @@ const style = {
   },
   priceContanier: {
     display: "flex",
-    marginTop: 2,
-    alignItem: "center",
     flexDirection: "row",
+    alignItems: "flex-end",
   },
 };
