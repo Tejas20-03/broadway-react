@@ -12,6 +12,8 @@ import {
   Paper,
   Radio,
   RadioGroup,
+  Slide,
+  SlideProps,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -53,7 +55,7 @@ type IProps = {
 };
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["300", "700"],
 });
 const DeliveryDialog: React.FunctionComponent<IProps> = ({
   open,
@@ -141,393 +143,148 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
     <Dialog
       onClose={() => toggleDrawer(false)}
       open={addressData.modalOpen}
+      fullScreen={window.innerWidth < 700}
       sx={{
         "& .MuiDialog-paper": {
-          width: "75%",
+          width: "100%",
           maxWidth: "800px",
-          height: "95%",
-          maxHeight: "850px",
+          height: "100%",
+          maxHeight: { xs: 'none', sm: '690px' },
+          margin: 0,
+        },
+        '& .MuiBackdrop-root': {
+          backdropFilter: 'blur(5px)',
         },
       }}
-      fullScreen={window.innerWidth < 600}
     >
       <DialogTitle
         sx={{
-          cursor: "pointer",
-          display: "flex",
-          justifyContent: "flex-end",
-          paddingRight: "16px",
-          paddingTop: "16px",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '16px',
+          position: 'relative',
         }}
       >
-        <IconButton onClick={() => toggleDrawer(false)} aria-label="close">
-          <CloseIcon sx={{ backgroundColor: "#e6f2ff" }} />
+        <Box sx={{ position: 'absolute', left: 12, top: 8, width: 120, height: 53 }}>
+          <Image src={logo} alt="Broadway Pizza Logo" width={120} height={53} />
+        </Box>
+        <Box sx={{ flexGrow: 1 }} />
+        <IconButton
+          onClick={() => toggleDrawer(false)}
+          aria-label="close"
+          sx={{
+            backgroundColor: '#e6f2ff',
+            borderRadius: '50%',
+            padding: '8px',
+            width: 40,
+            height: 40,
+          }}
+        >
+          <CloseIcon />
         </IconButton>
       </DialogTitle>
-
-      <Box sx={{ position: "absolute", top: 16, left: 16 }}>
-        <Image src={logo} alt="Broadway Pizza Logo" width={100} height={40} />
-      </Box>
-      <Box
-        sx={{
-          padding: "16px",
-          backgroundColor: "#e6f2ff",
-          margin: "16px",
-          borderRadius: "8px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          border: "0.2px solid orange",
-        }}
-      >
-        <Box>
-          <Typography
-            variant="subtitle1"
-            sx={{ fontWeight: "light", color: "#000", fontSize: "12px" }}
-          >
-            Selected {showOption}:
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ color: "#000", fontSize: "12px", fontWeight: "light" }}
-          >
-            {value && area ? `${value}, ${area}` : "Not selected"}
-          </Typography>
-        </Box>
-        <TiLocationArrowOutline color="orange" fontSize="28px" />
-      </Box>
-      <List
-        sx={{
-          pt: 0,
-          height: "100%",
-          width: "100%",
-          overflow: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Box sx={style.optionsContainer}>
-          <Box
-            sx={[
-              style.optionItem,
-              showOption === "Delivery" && style.activeOption,
-              { flex: 1, justifyContent: "center" },
-            ]}
-            onClick={() => setShowOption("Delivery")}
-            className={poppins.className}
-          >
-            <Box sx={style.imageContainer}>
-              <Image
-                src={"/delivery.png"}
-                width={50}
-                height={50}
-                alt="delivery"
-              />
-            </Box>
-            <Typography sx={style.optionText}>Delivery</Typography>
-          </Box>
-          <Box
-            sx={[
-              style.optionItem,
-              showOption === "Takeaway" && style.activeOption,
-              { flex: 1, justifyContent: "center" },
-            ]}
-            onClick={() => setShowOption("Takeaway")}
-            className={poppins.className}
-          >
-            <Box sx={style.imageContainer}>
-              <Image
-                src={"/takeaway.png"}
-                width={50}
-                height={50}
-                alt="takeaway"
-              />
-            </Box>
-            <Typography sx={style.optionText}>Take Away</Typography>
-          </Box>
-        </Box>
-
-        <Box sx={style.messageImportant}>
-          <Typography sx={{ color: "green", fontWeight: 300 }}>
-            Login with your profile
-          </Typography>
-          <Typography sx={{ color: "black", fontWeight: 300 }}>
-            {" "}
-            to save your address and enjoy more features!
-          </Typography>
-        </Box>
-        {showOption === "Takeaway" && (
-          <Box sx={style.selectCityBox} onClick={() => showModelCityFun(true)}>
+      <Box sx={{ margin: "10px 0px", boxSizing: "border-box", position: "relative", zIndex: 1, padding: "0px 16px" }}>
+        <Box
+          sx={{
+            padding: "8px 12px",
+            backgroundColor: "#e6f2ff",
+            margin: "5px 5px",
+            borderRadius: "10px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            border: "1px solid #ffe9ad",
+            height: "auto",
+            maxWidth: "750px",
+            fontSize: "12px",
+          }}
+        >
+          <Box>
             <Typography
+              variant="subtitle1"
               className={poppins.className}
-              sx={{ fontWeight: 600, fontSize: "1rem" }}
+              sx={{ color: colors.black, fontSize: "12px" }}
             >
-              Select City
+              Selected {showOption}:
             </Typography>
-            <Typography sx={style.boldTex} className={poppins.className}>
-              {value ? value : "Select"} <KeyboardArrowRightIcon />
-            </Typography>
-          </Box>
-        )}
-        {showModelCity && (
-          <>
-            <Dialog
-              onClose={() => showModelCityFun(false)}
-              open={showModelCity}
-              sx={{ height: "100vh" }}
-              fullScreen={window.innerWidth < 500}
-            >
-              <List
-                sx={{
-                  pt: 0,
-                  height: { xs: "100%", lg: "600px" },
-                  width: { sm: "100%", lg: "600px" },
-                  overflow: "hidden",
-                }}
-              >
-                <Box sx={style.backButton}>
-                  <Button
-                    sx={style.btn}
-                    onClick={() => showModelCityFun1(false)}
-                  >
-                    <WestIcon sx={{ color: colors.primary }} />
-                  </Button>
-                </Box>
-                <Box sx={style.headingBox}>
-                  <Typography sx={style.head1}>Select City</Typography>
-                </Box>
-                <Paper
-                  component="form"
-                  sx={{
-                    p: "2px 4px",
-                    display: "flex",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <IconButton sx={{ p: "10px" }} aria-label="menu">
-                    <SearchIcon />
-                  </IconButton>
-                  <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search Google Maps"
-                    inputProps={{ "aria-label": "search google maps" }}
-                    value={searchCity}
-                    onChange={(e) => handleSearchCity(e)}
-                  />
-                </Paper>
-                {isLoading ? (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      width: "100%",
-                      height: "100%",
-                      alignItems: "center",
-                    }}
-                  >
-                    <CircularProgress
-                      sx={{ color: colors.primary }}
-                      size="4em"
-                      thickness={5}
-                    />
-                  </Box>
-                ) : (
-                  <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={value}
-                    onChange={(e) => {
-                      const temp = JSON.parse(e.target.value);
-                      handleChange(temp.name, temp.tax);
-                    }}
-                    sx={{
-                      padding: "2rem",
-                      height: "100%",
-                      overflowY: "scroll",
-                      flexWrap: "nowrap !important",
-                    }}
-                  >
-                    {city &&
-                      city
-                        ?.filter((item) =>
-                          item.Name.toLowerCase().includes(
-                            searchCity.toLowerCase()
-                          )
-                        )
-                        .map((data, index) => {
-                          return (
-                            <Box key={index}>
-                              <FormControlLabel
-                                className={poppins.className}
-                                sx={{ fontSize: "4rem", width: "100%" }}
-                                value={JSON.stringify({
-                                  name: data.Name,
-                                  tax: data.delivery_tax,
-                                })}
-                                control={<Radio />}
-                                label={data.Name}
-                              />
-                              <Divider />
-                            </Box>
-                          );
-                        })}
-                  </RadioGroup>
-                )}
-              </List>
-            </Dialog>
-          </>
-        )}
-
-        {value && showOption !== "Delivery" && showOption && (
-          <Box sx={style.selectCityBox} onClick={callOutletApi}>
             <Typography
+              variant="body1"
               className={poppins.className}
-              sx={{ fontWeight: 600, fontSize: "1rem" }}
+              sx={{ color: colors.black, fontSize: "12px" }}
             >
-              Select Outlet
-            </Typography>
-            <Typography sx={style.boldTex} className={poppins.className}>
-              {outValue ? outValue : "Select"} <KeyboardArrowRightIcon />
+              {value && area ? `${value}, ${area}` : "Not selected"}
             </Typography>
           </Box>
-        )}
-        {outValue.length > 0 && showOption === "Takeaway" && (
-          <Box sx={style.showMenuBox}>
-            <Button
-              className={poppins.className}
-              sx={style.btns}
-              onClick={() => {
-                toggleDrawer(false),
-                  window.localStorage.setItem(
-                    "address",
-                    JSON.stringify({ ...addressData, modalOpen: false })
-                  );
-                router.push("/");
-              }}
-            >
-              SAVE LOCATION
-            </Button>
-          </Box>
-        )}
-        {outlet && (
-          <>
-            <Dialog
-              onClose={() => showModelCityFun(false)}
-              open={outlet}
-              sx={{ height: "100vh" }}
-              fullScreen={window.innerWidth < 500}
-            >
-              <List
-                sx={{
-                  pt: 0,
-                  height: { xs: "100%", lg: "600px" },
-                  width: { sm: "100%", lg: "600px" },
-                  overflow: "hidden",
-                }}
-              >
-                <Box sx={style.backButton}>
-                  <Button
-                    sx={style.btn}
-                    onClick={() => showModelOutletFun(false)}
-                  >
-                    <WestIcon sx={{ color: colors.primary }} />
-                  </Button>
-                </Box>
-                <Box sx={style.headingBox}>
-                  <Typography sx={style.head1}>Select outlet</Typography>
-                </Box>
-                <Paper
-                  component="form"
-                  sx={{
-                    p: "2px 4px",
-                    display: "flex",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <IconButton sx={{ p: "10px" }} aria-label="menu">
-                    <SearchIcon />
-                  </IconButton>
-                  <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search Outlet"
-                    inputProps={{ "aria-label": "search google maps" }}
-                    value={searchOutlet}
-                    onChange={handleSearchOutlet}
-                  />
-                </Paper>
-                {isLoading ? (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      width: "100%",
-                      height: "100%",
-                      alignItems: "center",
-                    }}
-                  >
-                    <CircularProgress
-                      sx={{ color: colors.primary }}
-                      size="4em"
-                      thickness={5}
-                    />
-                  </Box>
-                ) : (
-                  <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={outValue}
-                    onChange={handleChangeOut}
-                    sx={{
-                      padding: "2rem",
-                      height: "100%",
-                      overflowY: "scroll",
-                      flexWrap: "nowrap !important",
-                      paddingBottom: 20,
-                    }}
-                  >
-                    {outletResponse &&
-                      outletResponse
-                        ?.filter((item) =>
-                          item
-                            .toLowerCase()
-                            .includes(searchOutlet.toLowerCase())
-                        )
-                        .map((data, index) => {
-                          return (
-                            <Box key={index}>
-                              <FormControlLabel
-                                className={poppins.className}
-                                sx={{ fontSize: "4rem" }}
-                                value={data}
-                                control={<Radio color="primary" />}
-                                label={data}
-                              />
-                              <Divider />
-                            </Box>
-                          );
-                        })}
-                  </RadioGroup>
-                )}
-              </List>
-            </Dialog>
-          </>
-        )}
-        {showOption === "Delivery" && (
-          <>
+          <TiLocationArrowOutline color="orange" fontSize="32px" />
+        </Box>
+      </Box>
+
+      <Box sx={{ margin: "10px 0px", boxSizing: "border-box", position: "relative", zIndex: 1, padding: "0px 16px" }}>
+        <List
+          sx={{
+            pt: 0,
+            height: "100%",
+            width: "100%",
+            overflow: "auto",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={style.optionsContainer}>
             <Box
-              onClick={() => showDileveryCityOption(true)}
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                paddingX: "10px",
-                width: "100%",
-              }}
+              sx={[
+                style.optionItem,
+                showOption === "Delivery" ? style.activeOption : style.inactiveOption,
+                { flex: 1, justifyContent: "center" },
+              ]}
+              onClick={() => setShowOption("Delivery")}
+              className={poppins.className}
             >
+              <Box sx={style.imageContainer}>
+                <Image
+                  src={"/delivery.png"}
+                  width={40}
+                  height={40}
+                  alt="delivery"
+                />
+              </Box>
+              <Typography sx={style.optionText}>DELIVERY</Typography>
+            </Box>
+            <Box
+              sx={[
+                style.optionItem,
+                showOption === "Takeaway" ? style.activeOption : style.inactiveOption,
+                { flex: 1, justifyContent: "center" },
+              ]}
+              onClick={() => setShowOption("Takeaway")}
+              className={poppins.className}
+            >
+              <Box sx={style.imageContainer}>
+                <Image
+                  src={"/takeaway.png"}
+                  width={40}
+                  height={40}
+                  alt="takeaway"
+                />
+              </Box>
+              <Typography sx={style.optionText}>PICKUP</Typography>
+            </Box>
+          </Box>
+          {showOption !== "Takeaway" && (
+            <Box sx={style.messageImportant} className={poppins.className}>
+              <Typography sx={{ color: colors.grey }}>
+                <span style={{color:"green"}}>Login with your profile{' '}</span> to save your address and enjoy more features!
+              </Typography>
+            </Box>
+          )}
+
+
+          {showOption === "Takeaway" && (
+            <Box sx={style.selectCityBox} onClick={() => showModelCityFun(true)}>
               <Typography
                 className={poppins.className}
-                sx={{ fontWeight: 600, fontSize: "1rem" }}
+                sx={{ fontWeight: 400, fontSize: "1rem" }}
               >
                 Select City
               </Typography>
@@ -535,37 +292,44 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
                 {value ? value : "Select"} <KeyboardArrowRightIcon />
               </Typography>
             </Box>
-          </>
-        )}
-        {renderDileveryCity && showOption === "Delivery" && (
-          <>
-            <Dialog
-              onClose={() => showDileveryCityOption(false)}
-              open={renderDileveryCity}
-              sx={{
-                height: "100vh",
-              }}
-              fullScreen={window.innerWidth < 680}
-            >
-              <List
-                sx={{
-                  pt: 0,
-                  height: { xs: "100vh", lg: "600px" },
-                  width: { sm: "100%", lg: "600px" },
-                  overflow: "hidden",
+          )}
+          {showModelCity && (
+            <>
+              <Dialog
+                onClose={() => showModelCityFun(false)}
+                open={showModelCity}
+                fullScreen
+                TransitionComponent={Slide}
+                TransitionProps={{ direction: "up" } as SlideProps}
+                PaperProps={{
+                  sx: {
+                    position: 'absolute',
+                    bottom: 0,
+                    m: 0,
+                    height: '100%',
+                    maxHeight: { xs: '100%', sm: '690px' },
+                    width: '100%',
+                    maxWidth: '800px',
+                  },
                 }}
               >
-                <Box sx={style.backButton}>
-                  <Button
-                    sx={style.btn}
-                    onClick={() => showDileveryCityOption(false)}
+                <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="h5" sx={{ fontWeight: 600, flex: 1, textAlign: 'center' }}>
+                    Select City
+                  </Typography>
+                  <Typography
+                    onClick={() => showModelCityFun(false)}
+                    sx={{
+                      color: colors.black,
+                      cursor: 'pointer',
+                      fontWeight: 300,
+                      fontSize: "20px"
+                    }}
                   >
-                    <WestIcon sx={{ color: colors.primary }} />
-                  </Button>
+                    Close
+                  </Typography>
                 </Box>
-                <Box sx={style.headingBox}>
-                  <Typography sx={style.head1}>Select City</Typography>
-                </Box>
+
                 <Paper
                   component="form"
                   sx={{
@@ -573,15 +337,29 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
                     display: "flex",
                     alignItems: "center",
                     width: "100%",
+                    mb: 2,
+                    px: 2,
+                    boxShadow: '0 2px 4px -1px rgba(0,0,0,0.1)',
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: -4,
+                      left: 0,
+                      right: 0,
+                      height: 4,
+                      background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0))',
+                    }
                   }}
                 >
-                  <IconButton sx={{ p: "10px" }} aria-label="menu">
-                    <SearchIcon />
-                  </IconButton>
+                  {/* <IconButton sx={{ p: "10px" }} aria-label="search">
+                   
+                  </IconButton> */}
+                  <SearchIcon sx={{ marginRight: "8px" }} />
                   <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search city"
-                    inputProps={{ "aria-label": "search google maps" }}
+                    sx={{ ml: 1, flex: 1, fontSize: "20px" }}
+                    placeholder="Search City"
+                    inputProps={{ "aria-label": "search city" }}
                     value={searchCity}
                     onChange={(e) => handleSearchCity(e)}
                   />
@@ -609,13 +387,13 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
                     onChange={(e) => {
                       const temp = JSON.parse(e.target.value);
                       handleChange(temp.name, temp.tax);
-                      setRenderDileveryCity(false);
                     }}
                     sx={{
-                      padding: "2rem",
+                      padding: "1rem",
                       height: "100%",
-                      overflowY: "scroll",
-                      flexWrap: "nowrap !important",
+                      overflowY: "auto",
+                      borderTop: `1px solid ${colors.lightGrey}`,
+                      borderBottom: `1px solid ${colors.lightGrey}`,
                     }}
                   >
                     {city &&
@@ -627,10 +405,16 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
                         )
                         .map((data, index) => {
                           return (
-                            <Box key={index}>
+                            <Box key={index} sx={{ position: "relative" }}>
                               <FormControlLabel
                                 className={poppins.className}
-                                sx={{ fontSize: "4rem", width: "100%" }}
+                                sx={{
+                                  fontSize: "1rem",
+                                  width: "100%",
+                                  mb: 1,
+                                  '& .MuiRadio-root': { color: colors.grey, marginRight: 2 },
+                                  '& .Mui-checked': { color: colors.primary },
+                                }}
                                 value={JSON.stringify({
                                   name: data.Name,
                                   tax: data.delivery_tax,
@@ -638,66 +422,368 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
                                 control={<Radio />}
                                 label={data.Name}
                               />
-                              <Divider />
+                              <Divider sx={{ position: 'absolute', bottom: 0, left: 40, right: 0 }} />
                             </Box>
                           );
                         })}
                   </RadioGroup>
                 )}
-              </List>
-            </Dialog>
-          </>
-        )}
-        {value.length > 0 && showOption === "Delivery" && (
-          <Box
-            onClick={showDileveryAreaOption}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              paddingX: "10px",
-              width: "100%",
-              paddingY: "20px",
-            }}
-          >
-            <Typography
-              className={poppins.className}
-              sx={{ fontWeight: 600, fontSize: "1rem" }}
-            >
-              Select Area
-            </Typography>
-            <Typography sx={style.boldTex} className={poppins.className}>
-              {area ? area : "Select"} <KeyboardArrowRightIcon />
-            </Typography>
-          </Box>
-        )}
-        {renderDileveryArea && (
-          <>
-            <Dialog
-              onClose={() => setRenderDileveryArea(false)}
-              open={renderDileveryArea}
-              sx={{ height: "100vh" }}
-              fullScreen={window.innerWidth < 500}
-            >
-              <List
-                sx={{
-                  pt: 0,
-                  height: { xs: "100vh", lg: "600px" },
-                  width: { sm: "100%", lg: "600px" },
-                  overflow: "hidden",
+              </Dialog>
+            </>
+          )}
+
+          {value && showOption !== "Delivery" && showOption && (
+            <Box sx={style.selectCityBox} onClick={callOutletApi}>
+              <Typography
+                className={poppins.className}
+                sx={{ fontWeight: 400, fontSize: "1rem" }}
+              >
+                Select Outlet
+              </Typography>
+              <Typography sx={style.boldTex} className={poppins.className}>
+                {outValue ? outValue : "Select"} <KeyboardArrowRightIcon />
+              </Typography>
+            </Box>
+          )}
+          {outValue.length > 0 && showOption === "Takeaway" && (
+            <Box sx={style.showMenuBox}>
+              <Button
+                className={poppins.className}
+                sx={style.btns}
+                onClick={() => {
+                  toggleDrawer(false),
+                    window.localStorage.setItem(
+                      "address",
+                      JSON.stringify({ ...addressData, modalOpen: false })
+                    );
+                  router.push("/");
                 }}
               >
-                <Box sx={style.backButton}>
-                  <Button
-                    sx={style.btn}
-                    onClick={() => setRenderDileveryArea(false)}
-                  >
-                    <WestIcon sx={{ color: colors.primary }} />
-                  </Button>
+                SAVE LOCATION
+              </Button>
+            </Box>
+          )}
+          {outlet && (
+            <Dialog
+              onClose={() => showModelOutletFun(false)}
+              open={outlet}
+              fullScreen
+              TransitionComponent={Slide}
+              TransitionProps={{ direction: "up" } as SlideProps}
+              PaperProps={{
+                sx: {
+                  position: 'absolute',
+                  bottom: 0,
+                  m: 0,
+                  height: '100%',
+                  maxHeight: { xs: '100%', sm: '690px' },
+                  width: '100%',
+                  maxWidth: '800px',
+                },
+              }}
+            >
+              <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="h5" sx={{ fontWeight: 600, flex: 1, textAlign: 'center' }}>
+                  Select Outlet
+                </Typography>
+                <Typography
+                  onClick={() => showModelOutletFun(false)}
+                  sx={{
+                    color: colors.black,
+                    cursor: 'pointer',
+                    fontWeight: 300,
+                    fontSize: "20px"
+                  }}
+                >
+                  Close
+                </Typography>
+              </Box>
+
+              <Paper
+                component="form"
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  mb: 2,
+                  px: 2,
+                  boxShadow: '0 2px 4px -1px rgba(0,0,0,0.1)',
+                  position: 'relative',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: -4,
+                    left: 0,
+                    right: 0,
+                    height: 4,
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0))',
+                  }
+                }}
+              >
+                <SearchIcon sx={{ marginRight: "8px" }} />
+                <InputBase
+                  sx={{ ml: 1, flex: 1, fontSize: "20px" }}
+                  placeholder="Search Outlet"
+                  inputProps={{ "aria-label": "search outlet" }}
+                  value={searchOutlet}
+                  onChange={handleSearchOutlet}
+                />
+              </Paper>
+              {isLoading ? (
+                <Box sx={{ display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }}>
+                  <CircularProgress sx={{ color: colors.primary }} size="4em" thickness={5} />
                 </Box>
-                <Box sx={style.headingBox}>
-                  <Typography sx={style.head1}>Select Area</Typography>
+              ) : (
+                <RadioGroup
+                  value={outValue}
+                  onChange={handleChangeOut}
+                  sx={{
+                    padding: "1rem",
+                    height: "100%",
+                    overflowY: "auto",
+                    borderTop: `1px solid ${colors.lightGrey}`,
+                    borderBottom: `1px solid ${colors.lightGrey}`,
+                  }}
+                >
+                  {outletResponse &&
+                    outletResponse
+                      ?.filter((item) => item.toLowerCase().includes(searchOutlet.toLowerCase()))
+                      .map((data, index) => (
+                        <Box key={index} sx={{ position: "relative" }}>
+                          <FormControlLabel
+                            className={poppins.className}
+                            sx={{
+                              fontSize: "1rem",
+                              width: "100%",
+                              mb: 1,
+                              '& .MuiRadio-root': { color: colors.grey, marginRight: 2 },
+                              '& .Mui-checked': { color: colors.primary },
+                            }}
+                            value={data}
+                            control={<Radio />}
+                            label={data}
+                          />
+                          <Divider sx={{ position: 'absolute', bottom: 0, left: 40, right: 0 }} />
+                        </Box>
+                      ))}
+                </RadioGroup>
+              )}
+            </Dialog>
+          )}
+
+          {showOption === "Delivery" && (
+            <>
+              <Box
+                onClick={() => showDileveryCityOption(true)}
+                sx={style.selectCityBox}
+              >
+                <Typography
+                  className={poppins.className}
+                  sx={{ fontWeight: 400, fontSize: "1rem" }}
+                >
+                  Select City
+                </Typography>
+                <Typography sx={style.boldTex} className={poppins.className}>
+                  {value ? value : "Select"} <KeyboardArrowRightIcon />
+                </Typography>
+              </Box>
+
+            </>
+          )}
+          {renderDileveryCity && showOption === "Delivery" && (
+            <>
+              <Dialog
+                onClose={() => showDileveryCityOption(false)}
+                open={renderDileveryCity}
+                fullScreen
+                TransitionComponent={Slide}
+                TransitionProps={{ direction: "up" } as SlideProps}
+                PaperProps={{
+                  sx: {
+                    position: 'absolute',
+                    bottom: 0,
+                    m: 0,
+                    height: '100%',
+                    maxHeight: { xs: '100%', sm: '690px' },
+                    width: '100%',
+                    maxWidth: '800px',
+                  },
+                }}
+              >
+                <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="h5" sx={{ fontWeight: 600, flex: 1, textAlign: 'center' }}>
+                    Select City
+                  </Typography>
+                  <Typography
+                    onClick={() => showDileveryCityOption(false)}
+                    sx={{
+                      color: colors.black,
+                      cursor: 'pointer',
+                      fontWeight: 300,
+                      fontSize: "20px"
+                    }}
+                  >
+                    Close
+                  </Typography>
+                </Box>
+
+
+                <Paper
+                  component="form"
+                  sx={{
+                    p: "2px 4px",
+                    display: "flex",
+                    alignItems: "center",
+                    width: "100%",
+                    mb: 2,
+                    px: 2,
+                    boxShadow: '0 2px 4px -1px rgba(0,0,0,0.1)',
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: -4,
+                      left: 0,
+                      right: 0,
+                      height: 4,
+                      background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0))',
+                    }
+                  }}
+                >
+                  <SearchIcon sx={{ marginRight: "8px" }} />
+
+                  <InputBase
+                    sx={{ ml: 1, flex: 1, fontSize: "20px" }}
+                    placeholder="Search City"
+                    inputProps={{ "aria-label": "search city" }}
+                    value={searchCity}
+                    onChange={(e) => handleSearchCity(e)}
+                  />
+
+                </Paper>
+                {isLoading ? (
+                  <Box sx={{ display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }}>
+                    <CircularProgress sx={{ color: colors.primary }} size="4em" thickness={5} />
+                  </Box>
+                ) : (
+                  <RadioGroup
+                    value={value}
+                    onChange={(e) => {
+                      const temp = JSON.parse(e.target.value);
+                      handleChange(temp.name, temp.tax);
+                      setRenderDileveryCity(false);
+                    }}
+                    sx={{
+                      padding: "1rem",
+                      height: "100%",
+                      overflowY: "auto",
+                      borderTop: `1px solid ${colors.lightGrey}`,
+                      borderBottom: `1px solid ${colors.lightGrey}`,
+                    }}
+                  >
+                    {city &&
+                      city
+                        ?.filter((item) => item.Name.toLowerCase().includes(searchCity.toLowerCase()))
+                        .map((data, index) => (
+                          <Box key={index} sx={{ position: "relative" }}>
+                            <FormControlLabel
+                              className={poppins.className}
+                              sx={{
+                                fontSize: "1rem",
+                                width: "100%",
+                                mb: 1,
+                                '& .MuiRadio-root': { color: colors.grey, marginRight: 2 },
+                                '& .Mui-checked': { color: colors.primary },
+                              }}
+                              value={JSON.stringify({ name: data.Name, tax: data.delivery_tax })}
+                              control={<Radio />}
+                              label={data.Name}
+                            />
+                            <Divider sx={{ position: 'absolute', bottom: 0, left: 40, right: 0 }} />
+                          </Box>
+                        ))}
+                  </RadioGroup>
+                )}
+
+              </Dialog>
+            </>
+          )}
+          {value.length > 0 && showOption === "Delivery" && (
+            <Box
+              onClick={showDileveryAreaOption}
+              sx={style.selectCityBox}
+            >
+              <Typography
+                className={poppins.className}
+                sx={{ fontWeight: 400, fontSize: "1rem" }}
+              >
+                Select Area
+              </Typography>
+              <Typography sx={style.boldTex} className={poppins.className}>
+                {area ? area : "Select"} <KeyboardArrowRightIcon />
+              </Typography>
+            </Box>
+          )}
+          {showOption === "Delivery" && (
+            <Box sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              paddingY: "10px",
+            }}>
+              <Typography
+                className={poppins.className}
+                sx={{ fontWeight: 400, fontSize: "0.8rem" }}
+              >
+                Phone
+              </Typography>
+              <InputBase sx={{
+                ...style.inputStyle,
+                width: "100%",
+                fontSize: "1rem",
+                borderBottom: `2px solid ${colors.lightGrey}`,
+                paddingY: "4px",
+              }}
+                className={poppins.className}
+                placeholder="03xxxxxxxxx" inputProps={{ "aria-label": "phone number" }} />
+            </Box>
+          )}
+          {renderDileveryArea && (
+            <>
+              <Dialog
+                onClose={() => setRenderDileveryArea(false)}
+                open={renderDileveryArea}
+                fullScreen
+                TransitionComponent={Slide}
+                TransitionProps={{ direction: "up" } as SlideProps}
+                PaperProps={{
+                  sx: {
+                    position: 'absolute',
+                    bottom: 0,
+                    m: 0,
+                    height: '100%',
+                    maxHeight: { xs: '100%', sm: '690px' },
+                    width: '100%',
+                    maxWidth: '800px',
+                  },
+                }}
+              >
+                <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="h5" sx={{ fontWeight: 600, flex: 1, textAlign: 'center' }}>
+                    Select Area
+                  </Typography>
+                  <Typography
+                    onClick={() => setRenderDileveryArea(false)}
+                    sx={{
+                      color: colors.black,
+                      cursor: 'pointer',
+                      fontWeight: 300,
+                      fontSize: "20px"
+                    }}
+                  >
+                    Close
+                  </Typography>
                 </Box>
                 <Paper
                   component="form"
@@ -706,95 +792,101 @@ const DeliveryDialog: React.FunctionComponent<IProps> = ({
                     display: "flex",
                     alignItems: "center",
                     width: "100%",
+                    mb: 2,
+                    px: 2,
+                    boxShadow: '0 2px 4px -1px rgba(0,0,0,0.1)',
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: -4,
+                      left: 0,
+                      right: 0,
+                      height: 4,
+                      background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0))',
+                    }
                   }}
                 >
-                  <IconButton sx={{ p: "10px" }} aria-label="menu">
-                    <SearchIcon />
-                  </IconButton>
+                  <SearchIcon sx={{ marginRight: "8px" }} />
+
                   <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search area"
-                    inputProps={{ "aria-label": "search google maps" }}
+                    sx={{ ml: 1, flex: 1, fontSize: "20px" }}
+                    placeholder="Search Area"
+                    inputProps={{ "aria-label": "search area" }}
                     value={searchArea}
                     onChange={handleSearchArea}
                   />
                 </Paper>
                 {isLoading ? (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      width: "100%",
-                      height: "100%",
-                      alignItems: "center",
-                    }}
-                  >
-                    <CircularProgress
-                      sx={{ color: colors.primary }}
-                      size="4em"
-                      thickness={5}
-                    />
+                  <Box sx={{ display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }}>
+                    <CircularProgress sx={{ color: colors.primary }} size="4em" thickness={5} />
                   </Box>
                 ) : (
                   <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
                     value={area}
                     onChange={(e) => {
                       handleChangeArea(e);
                       setRenderDileveryArea(false);
                     }}
                     sx={{
-                      padding: "2rem",
-                      height: "100%",
-                      overflowY: "scroll",
+                      padding: "1rem !important",
+                      height: "calc(100% - 120px) !important",
+                      overflowY: "auto !important",
+                      display: "flex !important",
+                      flexDirection: "column !important",
                       flexWrap: "nowrap !important",
-                      paddingBottom: 20,
+                      borderTop: `1px solid ${colors.lightGrey} !important`,
+                      borderBottom: `1px solid ${colors.lightGrey} !important`,
                     }}
                   >
                     {areaData &&
                       areaData
-                        ?.filter((item) =>
-                          item.toLowerCase().includes(searchArea.toLowerCase())
-                        )
-                        .map((data, index) => {
-                          return (
-                            <Box key={index}>
-                              <FormControlLabel
-                                className={poppins.className}
-                                sx={{ fontSize: "4rem", width: "100%" }}
-                                value={data}
-                                control={<Radio />}
-                                label={data}
-                              />
-                              <Divider />
-                            </Box>
-                          );
-                        })}
+                        ?.filter((item) => item.toLowerCase().includes(searchArea.toLowerCase()))
+                        .map((data, index) => (
+                          <Box key={index} sx={{ position: "relative" }}>
+                            <FormControlLabel
+                              className={poppins.className}
+                              sx={{
+                                fontSize: "1rem",
+                                width: "100%",
+                                mb: 1,
+                                '& .MuiRadio-root': { color: colors.grey, marginRight: 2 },
+                                '& .Mui-checked': { color: colors.primary },
+                              }}
+                              value={data}
+                              control={<Radio />}
+                              label={data}
+                            />
+                            <Divider sx={{ position: 'absolute', bottom: 0, left: 40, right: 0 }} />
+                          </Box>
+                        ))}
                   </RadioGroup>
+
                 )}
-              </List>
-            </Dialog>
-          </>
-        )}
-        {area.length > 0 && showOption === "Delivery" && (
-          <Box sx={style.showMenuBox}>
-            <Button
-              className={poppins.className}
-              sx={style.btns}
-              onClick={() => {
-                toggleDrawer(false),
-                  window.localStorage.setItem(
-                    "address",
-                    JSON.stringify({ ...addressData, modalOpen: false })
-                  );
-                router.push("/");
-              }}
-            >
-              SAVE LOCATION
-            </Button>
-          </Box>
-        )}
-      </List>
+
+              </Dialog>
+            </>
+          )}
+          {showOption === "Delivery" && (
+            <Box sx={style.showMenuBox}>
+              <Button
+                className={poppins.className}
+                sx={style.btns}
+                onClick={() => {
+                  toggleDrawer(false),
+                    window.localStorage.setItem(
+                      "address",
+                      JSON.stringify({ ...addressData, modalOpen: false })
+                    );
+                  router.push("/");
+                }}
+              >
+                SAVE LOCATION
+              </Button>
+            </Box>
+          )}
+        </List>
+      </Box>
     </Dialog>
   );
 };
@@ -823,10 +915,17 @@ const style = {
     maxWidth: { lg: "1400px", md: "950px" },
   },
   messageImportant: {
-    padding: "16px",
+    padding: { xs: "12px 16px", sm: "8px 0px" },
     textAlign: "left",
     display: "flex",
-    fontSize: "16px",
+    flexDirection: "row",
+    alignItems: "center",
+    fontSize: { xs: "14px", sm: "12px" },
+    opacity: "0.8",
+    gap: "4px",
+    marginBottom: "20px",
+    // backgroundColor: { xs: "#f0f0f0", sm: "transparent" },
+    borderRadius: { xs: "8px", sm: "0" },
   },
   header: {
     width: "100%",
@@ -841,25 +940,12 @@ const style = {
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    marginBottom: "20px",
+    marginBottom: "8px",
+    borderBottom: `2px solid ${colors.lightGrey}`
   },
-  // optionItem: {
-  //   display: "flex",
-  //   alignItems: "center",
-  //   padding: "15px",
-  //   cursor: "pointer",
-  //   borderBottom: "2px solid transparent",
-  //   transition: "all 0.3s ease",
-  // },
   activeOption: {
-    borderBottom: "2px solid #FFD700", // Yellow border for active option
-    backgroundColor: "rgba(255, 215, 0, 0.1)", // Light yellow background
+    borderBottom: "2px solid #FFD700",
   },
-  // optionText: {
-  //   marginLeft: "15px",
-  //   fontSize: "18px",
-  //   fontWeight: 600,
-  // },
   searchBoxMob: {
     width: "100%",
     padding: "1rem",
@@ -885,7 +971,7 @@ const style = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginRight: "10px",
+    marginRight: "8px",
     "& img": {
       objectFit: "contain",
     },
@@ -901,10 +987,15 @@ const style = {
     borderBottom: "2px solid transparent",
     transition: "all 0.3s ease",
     justifyContent: "center",
+    marginLeft: "2px",
+    marginRight: "2px",
+  },
+  inactiveOption: {
+    opacity: 0.5,
+    color: colors.grey,
   },
   optionText: {
-    marginLeft: "10px",
-    fontSize: "18px",
+    fontSize: "16px",
     fontWeight: 600,
   },
 
@@ -923,7 +1014,7 @@ const style = {
     width: "100%",
     paddingY: "0.5rem",
     fontSize: "12px",
-    paddingX: "16px",
+    // paddingX: "16px",
     "::after": { borderBottom: "0px !important" },
     backgroundColor: colors.white,
   },
@@ -1008,9 +1099,9 @@ const style = {
     marginX: "1rem",
   },
   boldTex: {
-    color: colors.primary,
-    fontWeight: 600,
-    fontSize: "1rem",
+    color: colors.grey,
+    fontWeight: 400,
+    fontSize: "0.8rem",
     display: "flex",
     alignItems: "center",
     cursor: "pointer",
@@ -1020,7 +1111,9 @@ const style = {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "1rem",
+    padding: "1rem 0rem",
+    marginTop: "16px",
+    borderBottom: `2px solid ${colors.lightGrey}`
   },
   outvals: {
     cursor: "pointer",
@@ -1148,7 +1241,7 @@ const style = {
     gap: "16px",
   },
   btns: {
-    width: "90%",
+    width: "100%",
     transition: "all ease-in-out 0.5s",
     backgroundColor: colors.primary,
     color: colors.black,

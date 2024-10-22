@@ -1,4 +1,6 @@
 import "./globals.css";
+import 'framework7/css/bundle';
+import 'framework7/css';
 import type { Metadata } from "next";
 import Header from "@/components/Layout/Header/Header";
 import { Poppins } from "next/font/google";
