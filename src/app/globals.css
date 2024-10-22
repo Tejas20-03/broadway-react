@@ -62,7 +62,7 @@ body {
   }
 
   .mobSearch {
-    display: flex;
+    display: none;
   }
 }
 

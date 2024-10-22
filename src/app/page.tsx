@@ -14,10 +14,7 @@ import { useSelector } from "react-redux";
 import { StoreState } from "@/redux/reduxStore";
 import GetApp from "@/components/Common/GetApp";
 import Blogs from "@/components/Home/Blogs";
-import Framework7 from 'framework7'
-import Framework7React from "framework7-react";
 
-Framework7.use(Framework7React);
 
 export default function Home() {
   const [tabs, setTabs] = useState<string[]>([]);
@@ -85,19 +82,19 @@ export default function Home() {
       )}
       {menu?.map((item, index) => (
         <React.Fragment key={index}>
-          {index === 0 ? (
+          {/* {index === 0 ? (
             <FeatureDeals
               isLoading={isLoading}
               data={item.MenuItemsList}
               heading={item.Name}
             />
-          ) : (
+          ) : ( */}
             <PremiumDeals
               isLoading={isLoading}
               data={item.MenuItemsList}
               heading={item.Name}
             />
-          )}
+          {/* )} */}
         </React.Fragment>
       ))}
       {menu && menu?.length > 0 && (

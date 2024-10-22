@@ -19,7 +19,7 @@ const poppins = Poppins({
   weight: ["300", "700"],
 });
 
-const ICON_SIZE = 30;
+const ICON_SIZE = 26;
 const ICON_ALT = "Navigation icon";
 
 type NavItemProps = {

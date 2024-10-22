@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Container,
-  CssBaseline,
   Divider,
   FormControlLabel,
   Radio,
@@ -14,15 +13,12 @@ import {
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import logo from "../../../../public/Assets/broadwayPizzaLogo.png";
-import headerImage from "../../../../public/Assets/headerBroadwayImage.jpg";
 import { colors } from "../../../constant/Colors";
 import { Poppins } from "next/font/google";
-import Location from "../../../../public/Assets/location.svg";
 import WestIcon from "@mui/icons-material/West";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ModbileScreenInput from "./MobileScreenInput";
 import Link from "next/link";
 import List from "@mui/material/List";
@@ -45,9 +41,12 @@ import { error } from "console";
 import { AllOutletsResponseType } from "@/services/Feedback/types";
 import { TiLocationArrowOutline } from "react-icons/ti";
 
+//@ts-ignore
+import { Location } from 'framework7-icons/react'
+
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["500", "700"],
+  weight: ["200", "400", "500", "700"],
 });
 const Header: React.FC = () => {
   const router = useRouter();
@@ -143,10 +142,10 @@ const Header: React.FC = () => {
       <Box
         sx={{
           ...style.main,
-          height: "54px", // Add this line
+          height: "54px",
           backgroundColor: `rgba(255, 255, 255, ${Math.min(
-            scrollPosition / 400,
-            0.9
+            scrollPosition / 200,
+            0.95
           )})`,
         }}
       >
@@ -161,28 +160,29 @@ const Header: React.FC = () => {
               style={{ cursor: "pointer" }}
               onClick={redirectToHome}
             />
-            <Box
-              sx={style.headerLocationBox}
-              onClick={() => toggleDrawer(true)}
-            >
-              <Box sx={style.locationInfo}>
-                <TiLocationArrowOutline />
-                <Typography
-                  sx={style.selectedOption}
-                  className={poppins.className}
-                >
-                  {addressData.addressType ? addressData.addressType : "Select"}
-                </Typography>
-              </Box>
-              <Box sx={style.addressType}>
-                <Typography sx={style.location} className={poppins.className}>
-                  {addressData.city ? addressData.city : ""}{" "}
-                  {addressData.area || addressData.outlet || "Delivery/Pickup"}
-                </Typography>
-              </Box>
+          </Box>
+          <Box
+            sx={style.headerLocationBox}
+            onClick={() => toggleDrawer(true)}
+          >
+            <Box sx={style.locationInfo}>
+              <Location />
+              <Typography
+                sx={style.selectedOption}
+                className={poppins.className}
+              >
+                {addressData.addressType ? addressData.addressType : "Select"}
+              </Typography>
+            </Box>
+            <Box sx={style.addressType}>
+              <Typography sx={style.location} className={poppins.className}>
+                {addressData.city ? addressData.city : ""}{" "}
+                {addressData.area || addressData.outlet || "Delivery/Pickup"}
+              </Typography>
             </Box>
           </Box>
         </Container>
+
         <HeaderStrip openFeedbackDialog={openFeedbackDialog} />
       </Box>
       <ModbileScreenInput openFeedbackDialog={openFeedbackDialog} />
@@ -343,6 +343,7 @@ const style = {
     top: 0,
     zIndex: 100,
     transition: "background-color 0.1s ease",
+    marginLeft: { xs: "0px", sm: "28px" },
   },
   mainMob: {
     width: "100%",
@@ -353,7 +354,10 @@ const style = {
   },
 
   container: {
-    maxWidth: { lg: "1400px", md: "950px" },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    maxWidth: { lg: "1500px", md: "950px" },
   },
   header: {
     width: "100%",
@@ -379,15 +383,19 @@ const style = {
     flexDirection: "row",
     gap: "0.5rem",
     alignItems: "center",
+    marginLeft: "auto",
+    paddingRight: "0.5rem",
   },
   locationInfo: {
-    fontWeight: 200,
+    gap: "4px",
+    // fontWeight: 200,
     display: "flex",
     flexDirection: "row",
   },
   selectedOption: {
-    fontWeight: 200,
+    // fontWeight: 200,
     fontSize: { xs: "0.7rem", sm: "0.8rem" },
+    color: colors.black
   },
   locationText: {
     display: "flex",
@@ -404,13 +412,15 @@ const style = {
     padding: { xs: "0.2rem 0.4rem", sm: "0.25rem 0.5rem" },
     borderRadius: "4px",
     fontSize: { xs: "0.7rem", sm: "0.8rem" },
-    fontWeight: 500,
+    fontWeight: 400,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     gap: "0.3rem",
+    margin: "2px",
+    width:"100%",
   },
-  
+
   dilveryTo: {
     color: colors.black,
     fontSize: "0.9rem",
@@ -423,6 +433,7 @@ const style = {
   },
   location: {
     color: colors.black,
+    fontWeight: "500",
     fontSize: { xs: "0.7rem", sm: "0.8rem" },
   },
   inputStyle: {

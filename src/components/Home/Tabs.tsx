@@ -22,6 +22,7 @@ const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const handleTabClick = (item: string, index: number) => {
     const headingElement = document.getElementById(item);
+    
     if (headingElement) {
       window.scrollTo({
         top: headingElement.offsetTop - 100,
@@ -29,8 +30,6 @@ const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
       });
     }
     setActiveTab(item);
-
-    // swiperRef.current?.swiper.translateTo(index * 330, 1000, false, false);
   };
 
   const handleScroll = () => {
@@ -90,7 +89,7 @@ const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
             scrollPosition / 400,
             0.9
           )})`,
-          top: "54px", // Adjust this value to remove the gap
+          top: "54px",
         }}
       >
         <Container sx={style.container}>
@@ -117,9 +116,10 @@ const Tabs: React.FunctionComponent<Iprops> = ({ tabs = [], isLoading }) => {
                         ...style.tabItem,
                         ...(activeTab === item
                           ? {
-                              background: colors.primary,
-                            }
+                            background: colors.primary,
+                          }
                           : {}),
+                        textTransform: "none",
                       }}
                       key={index}
                       className={poppins.className}
@@ -168,7 +168,7 @@ const style = {
     paddingY: "8px",
     paddingX: "6px",
     color: colors.black,
-    fontSize: { xl: "0.6rem", lg: "0.5rem", xs: "12px" },
+    fontSize: { xl: "0.8rem", lg: "0.6rem", xs: "12px" },
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     fontWeight: 300,
     marginLeft: "6px",
