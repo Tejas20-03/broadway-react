@@ -7,11 +7,8 @@ import { StoreState } from "@/redux/reduxStore";
 import { Poppins } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { IconType } from "react-icons";
-import { IoHomeOutline, IoMenu } from "react-icons/io5";
-import { BsPin } from "react-icons/bs";
-import { TbLogs } from "react-icons/tb";
-import { GrCart } from "react-icons/gr";
-import { MdOutlinePersonOutline } from "react-icons/md";
+//@ts-ignore
+import { House,DocPlaintext,Cart,Pin,Person,Bars,ChatBubbleText } from 'framework7-icons/react';
 
 type IProps = {
   openFeedbackDialog: (value: boolean) => void;
@@ -22,7 +19,7 @@ const poppins = Poppins({
   weight: ["300", "700"],
 });
 
-const ICON_SIZE = 26;
+const ICON_SIZE = 30;
 const ICON_ALT = "Navigation icon";
 
 type NavItemProps = {
@@ -54,37 +51,41 @@ const NavItem = ({
           sx={{
             ...style.iconWrapper,
             backgroundColor:
-              title === "Menu" ? "black" : isActive ? "orange" : "transparent",
+              title === "Bar" ? "black" : isActive ? "rgb(255, 199, 20)" : "transparent",
             borderRadius: "50%",
           }}
         >
-          <Icon size={ICON_SIZE} color={title === "Menu" ? "white" : "black"} />
+          <Icon size={ICON_SIZE} height={ICON_SIZE} width={ICON_SIZE} color={title === "Bar" ? "white" : "black"} />
         </Box>
         {title === "Cart" && cartData.cartProducts.length >= 0 && (
           <Box sx={style.badge}>
             <Typography
               className={poppins.className}
-              sx={{ fontSize: 12, color: "black", backgroundColor: "orange" }}
+              sx={{ fontSize: 12, color: "black", backgroundColor: "rgb(255, 199, 20)" }}
             >
               {cartData.cartProducts.length}
             </Typography>
           </Box>
         )}
-        <Typography className={poppins.className} sx={style.text}>
-          {title}
-        </Typography>
+        {title !== "Bar" && (
+          <Typography className={poppins.className} sx={style.text}>
+            {title}
+          </Typography>
+        )}
       </Box>
     </Tooltip>
   );
 };
 
+
 const navItems = [
-  { href: "/menu", icon: IoMenu, title: "Menu" },
-  { href: "/", icon: IoHomeOutline, title: "Order" },
-  { href: "/cart", icon: GrCart, title: "Cart" },
-  { href: "/location", icon: BsPin, title: "Location" },
-  { href: "/blogs", icon: TbLogs, title: "Blogs" },
-  { href: "/profile", icon: MdOutlinePersonOutline, title: "Profile" },
+  { href: "/menu", icon: Bars, title: "Bar" },
+  { href: "/", icon: House, title: "Order" },
+  { href: "/menu", icon: DocPlaintext, title: "Menu" },
+  { href: "/cart", icon: Cart, title: "Cart" },
+  { href: "/location", icon: Pin, title: "Location" },
+  { href: "/blogs", icon: ChatBubbleText, title: "Blogs" },
+  { href: "/profile", icon: Person, title: "Profile" },
 ];
 
 const HeaderStrip: React.FC<IProps> = ({ openFeedbackDialog }) => {
@@ -117,7 +118,7 @@ const style = {
     display: { lg: "flex", xs: "none" },
     flexDirection: "column",
     justifyContent: "space-between",
-    padding: "0.5rem 0.5rem",
+    // padding: "0.2rem 0.2rem",
     background: "white",
     zIndex: 99,
     boxShadow: "1px 0 2px rgba(0, 0, 0, 0.1)",
@@ -126,22 +127,22 @@ const style = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: ICON_SIZE + 10,
-    height: ICON_SIZE + 10,
+    width: ICON_SIZE + 16,
+    height: ICON_SIZE + 16,
   },
   iconBoxLarge: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     height: "100%",
-    paddingTop: "20px",
+    paddingTop: "10px",
     paddingBottom: "20px",
   },
   badge: {
     position: "absolute",
     top: "-5px",
     right: "5px",
-    background: "orange",
+    background: "rgb(255, 199, 20)",
     color: "black",
     borderRadius: "50%",
     width: "20px",
