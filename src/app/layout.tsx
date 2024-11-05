@@ -17,11 +17,11 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Order Broadway Pizza Pakistan Online - Best Pizza Deals",
+  title: "Broadway Pizza",
   description:
     "Broadway Pizza is offering online ordering services in Pakistan. Order now and get amazing discounts and coupons on pizza deals and other fast food.",
   icons: {
-    icon: ["/favicon.ico"],
+    icon: ["/Assets/broadwayPizzaLogo.png"],
     apple: ["/favicon.ico"],
     shortcut: ["/favicon.ico"],
   },

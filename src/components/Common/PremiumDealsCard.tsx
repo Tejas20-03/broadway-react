@@ -182,7 +182,7 @@ const PremiumDealsCard: React.FC<Iprops> = ({
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {discount > 0 && (
               <Typography sx={style.saveDiscount} className={poppins.className}>
-                save {discount}%
+                Save {discount}%
               </Typography>
             )}
             {isNew && (
@@ -433,16 +433,12 @@ const style = {
   card: {
     display: "flex",
     flexDirection: "column",
-    padding: "8px",
-    borderRadius: "1rem",
-    boxShadow: " 0px 15px 22px 0px rgba(0, 0, 0, 0.09)",
+    padding: "6px",
+    borderRadius: "0.8rem",
+    boxShadow: " 0px 15px 22px 0px rgba(0, 0, 0, 0.07)",
     justifyContent: "center",
-    margin: "4px",
-    transition: "transform 0.3s ease",
-    ":hover": {
-      transform: "scale(1.05)",
-    },
-    marginTop: "6px",
+    margin: "3px",
+    marginTop: "4px",
     backgroundColor: colors.white,
     cursor: "pointer",
     position: "relative",
@@ -458,13 +454,17 @@ const style = {
     width: "100%",
     height: "100%",
     borderRadius: "16px",
+    imageRendering: "auto" as const, // Using a valid ImageRendering value
   },
   media: {
     position: "relative",
     width: "100%",
     height: "100%",
-    borderRadius: "1rem",
-    // marginBottom: "0.1rem",
+    borderRadius: "0.8rem",
+    transition: "transform 0.3s ease",
+    ":hover": {
+      transform: "scale(1.05)",
+    },
   },
   actualPrice: {
     fontWeight: 400,
@@ -476,9 +476,12 @@ const style = {
     color: colors.redCut,
   },
   discountedPrice: {
-    fontWeight: 600,
+    fontWeight: 500,
     marginTop: "8px",
-    fontSize: "1rem",
+    fontSize: "0.9rem",
+    backgroundColor: "#f5f5f5", // Grey background
+    padding: "4px 8px",
+    borderRadius: "4px",
   },
   infoContainer: {
     display: "flex",
@@ -489,9 +492,9 @@ const style = {
   },
   saveDiscount: {
     backgroundColor: colors.primary,
-    color: colors.white,
-    fontSize: "12px",
-    fontWeight: 600,
+    color: colors.black,
+    fontSize: "10px",
+    fontWeight: 400,
     padding: "4px 8px",
     borderRadius: "4px",
     marginRight: "8px",
@@ -536,11 +539,11 @@ const style = {
     width: "100%",
   },
   title: {
-    paddingY: "8px",
+    paddingY: "6px",
     textAlign: "flex-start",
-    fontWeight: 600,
+    fontWeight: 500,
     borderRadius: 5,
-    fontSize: "18px",
+    fontSize: "16px",
   },
   titleBox: {
     borderRadius: "20px",
