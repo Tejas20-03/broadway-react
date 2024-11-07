@@ -52,6 +52,7 @@ const Header: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
   const isMenuPage = pathname === '/menu';
+  const isCartPage = pathname === '/cart';
 
   const addressData = useSelector((state: StoreState) => state.address);
   const dispatch = useDispatch<StoreDispatch>();
@@ -185,7 +186,7 @@ const Header: React.FC = () => {
               </Typography>
             </Box>
           )}
-          {!isMenuPage && (
+          {(!isMenuPage && !isCartPage) && (
             <Box
               sx={style.headerLocationBox}
               onClick={() => toggleDrawer(true)}

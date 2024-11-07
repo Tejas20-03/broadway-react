@@ -74,332 +74,367 @@ export default function Cart() {
   return (
     <>
       <Box sx={style.main}>
-        <Container sx={style.container}>
-          <Typography sx={style.heading} className={poppins.className}>
-            CART
-          </Typography>
-          <Grid container columnSpacing={4}>
-            <Grid item md={7} xs={12}>
-              <Grid container columnSpacing={4}>
-                {cartData.cartProducts.map((item, index) => (
-                  <Grid item md={5} xs={12} key={index}>
-                    <Box sx={style.card}>
-                      <Box sx={style.media}>
-                        <Image
-                          src={item.ItemImage}
-                          fill={false}
-                          alt="oops"
-                          style={style.image}
-                          width={180}
-                          height={180}
-                        />
-                      </Box>
-                      <Box sx={style.content}>
-                        <Typography
-                          className={poppins.className}
-                          sx={{ ...style.title }}
-                        >
-                          {item.ProductName}
-                        </Typography>
-                        {item.options &&
-                          item.options.length > 0 &&
-                          item.options.map(
-                            (option, index) =>
-                              index < 2 && (
-                                <Typography
-                                  sx={style.p}
-                                  className={poppins.className}
-                                >
-                                  <small>
-                                    {option.OptionGroupName} :
-                                    {option.OptionName}
-                                  </small>
-                                  {option.Price > 0 && (
-                                    <small
-                                      style={{
-                                        position: "absolute",
-                                        right: "10px",
-                                        float: "right",
-                                      }}
-                                    >
-                                      + Rs. {option.Price}
+        {cartData.cartProducts.length === 0 ? (
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '80vh',
+            paddingLeft: '2.5rem',
+            gap: 1,
+          }}>
+            <Typography
+              variant="h5"
+              className={poppins.className}
+              sx={{
+                textAlign: 'center',
+                fontWeight: 400,
+                color: colors.black
+              }}
+            >
+              Your cart is
+            </Typography>
+            <Typography
+              variant="h5"
+              className={poppins.className}
+              sx={{
+                textAlign: 'center',
+                fontWeight: 500,
+                color: colors.black
+              }}
+            >
+              Empty
+            </Typography>
+          </Box>
+        ) : (
+          <Container sx={style.container}>
+            <Typography sx={style.heading} className={poppins.className}>
+              CART
+            </Typography>
+            <Grid container columnSpacing={4}>
+              <Grid item md={7} xs={12}>
+                <Grid container columnSpacing={4}>
+                  {cartData.cartProducts.map((item, index) => (
+                    <Grid item md={5} xs={12} key={index}>
+                      <Box sx={style.card}>
+                        <Box sx={style.media}>
+                          <Image
+                            src={item.ItemImage}
+                            fill={false}
+                            alt="oops"
+                            style={style.image}
+                            width={180}
+                            height={180}
+                          />
+                        </Box>
+                        <Box sx={style.content}>
+                          <Typography
+                            className={poppins.className}
+                            sx={{ ...style.title }}
+                          >
+                            {item.ProductName}
+                          </Typography>
+                          {item.options &&
+                            item.options.length > 0 &&
+                            item.options.map(
+                              (option, index) =>
+                                index < 2 && (
+                                  <Typography
+                                    sx={style.p}
+                                    className={poppins.className}
+                                  >
+                                    <small>
+                                      {option.OptionGroupName} :
+                                      {option.OptionName}
                                     </small>
-                                  )}
-                                </Typography>
-                              )
-                          )}
-                        <Button
-                          sx={{
-                            color: colors.primary,
-                            paddingY: "4px",
-                            paddingX: "8px",
-                            position: "relative",
-                            zIndex: 999,
-                            textTransform: "lowercase",
-                          }}
-                          onClick={() => {
-                            setActive(index);
-                            showDetailedCart(true);
-                          }}
-                        >
-                          Read More
-                        </Button>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            width: "100%",
-                          }}
-                        >
+                                    {option.Price > 0 && (
+                                      <small
+                                        style={{
+                                          position: "absolute",
+                                          right: "10px",
+                                          float: "right",
+                                        }}
+                                      >
+                                        + Rs. {option.Price}
+                                      </small>
+                                    )}
+                                  </Typography>
+                                )
+                            )}
+                          <Button
+                            sx={{
+                              color: colors.primary,
+                              paddingY: "4px",
+                              paddingX: "8px",
+                              position: "relative",
+                              zIndex: 999,
+                              textTransform: "lowercase",
+                            }}
+                            onClick={() => {
+                              setActive(index);
+                              showDetailedCart(true);
+                            }}
+                          >
+                            Read More
+                          </Button>
                           <Box
                             sx={{
                               display: "flex",
                               flexDirection: "row",
-                              justifyContent: "start",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <a
-                              className="crossButton"
-                              onClick={() => removeProduct(item?.ID)}
-                            >
-                              <Image
-                                width={15}
-                                height={15}
-                                src={"/close.png"}
-                                alt="oops"
-                                style={{ marginRight: "8px" }}
-                              />
-                            </a>
-                            <Box sx={style.stepperBox}>
-                              <Box
-                                sx={style.minus}
-                                onClick={() =>
-                                  dispatch(removeQuantity({ id: item.ID }))
-                                }
-                              ></Box>
-                              <Box sx={style.inputStepper}>
-                                <input
-                                  className="inputStepper"
-                                  type="text"
-                                  data-indexvalue="0"
-                                  min="0"
-                                  step="1"
-                                  value={item.Quantity}
-                                  style={{ color: colors.primary }}
-                                />
-                              </Box>
-                              <Box
-                                sx={style.plus}
-                                onClick={() =>
-                                  dispatch(addQuantity({ id: item.ID }))
-                                }
-                              >
-                                <AddIcon
-                                  sx={{
-                                    color: colors.primary,
-                                  }}
-                                />
-                              </Box>
-                            </Box>
-                          </Box>
-                          <Box
-                            sx={{
-                              display: {
-                                xl: "flex",
-                                lg: "block",
-                                xs: "flex",
-                              },
-                              alignItems: "center",
-                              justifyContent: "center",
-                              gap: "8px",
+                              justifyContent: "space-between",
                               width: "100%",
                             }}
                           >
-                            <Typography
+                            <Box
                               sx={{
-                                fontSize: "15px",
-                                fontWeight: 700,
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "start",
+                                alignItems: "center",
+                                gap: "5px",
                               }}
                             >
-                              Rs.{" "}
-                              {Number(
-                                item.TotalProductPrice * Number(item.Quantity)
-                              ).toFixed(2)}
-                            </Typography>
+                              <a
+                                className="crossButton"
+                                onClick={() => removeProduct(item?.ID)}
+                              >
+                                <Image
+                                  width={15}
+                                  height={15}
+                                  src={"/close.png"}
+                                  alt="oops"
+                                  style={{ marginRight: "8px" }}
+                                />
+                              </a>
+                              <Box sx={style.stepperBox}>
+                                <Box
+                                  sx={style.minus}
+                                  onClick={() =>
+                                    dispatch(removeQuantity({ id: item.ID }))
+                                  }
+                                ></Box>
+                                <Box sx={style.inputStepper}>
+                                  <input
+                                    className="inputStepper"
+                                    type="text"
+                                    data-indexvalue="0"
+                                    min="0"
+                                    step="1"
+                                    value={item.Quantity}
+                                    style={{ color: colors.primary }}
+                                  />
+                                </Box>
+                                <Box
+                                  sx={style.plus}
+                                  onClick={() =>
+                                    dispatch(addQuantity({ id: item.ID }))
+                                  }
+                                >
+                                  <AddIcon
+                                    sx={{
+                                      color: colors.primary,
+                                    }}
+                                  />
+                                </Box>
+                              </Box>
+                            </Box>
+                            <Box
+                              sx={{
+                                display: {
+                                  xl: "flex",
+                                  lg: "block",
+                                  xs: "flex",
+                                },
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "8px",
+                                width: "100%",
+                              }}
+                            >
+                              <Typography
+                                sx={{
+                                  fontSize: "15px",
+                                  fontWeight: 700,
+                                }}
+                              >
+                                Rs.{" "}
+                                {Number(
+                                  item.TotalProductPrice * Number(item.Quantity)
+                                ).toFixed(2)}
+                              </Typography>
+                            </Box>
                           </Box>
                         </Box>
                       </Box>
-                    </Box>
 
-                    {detailedCartDiaglog && active === index && (
-                      <CartDialog
-                        showDetailedCart={showDetailedCart}
-                        detailedCartDiaglog={detailedCartDiaglog}
-                        product={item}
-                      />
-                    )}
-                  </Grid>
-                ))}
+                      {detailedCartDiaglog && active === index && (
+                        <CartDialog
+                          showDetailedCart={showDetailedCart}
+                          detailedCartDiaglog={detailedCartDiaglog}
+                          product={item}
+                        />
+                      )}
+                    </Grid>
+                  ))}
+                </Grid>
+                <Link
+                  href={"/"}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Button sx={style.btn} className={poppins.className}>
+                    ADD MORE ITEMS
+                  </Button>
+                </Link>
               </Grid>
-              <Link
-                href={"/"}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <Button sx={style.btn} className={poppins.className}>
-                  ADD MORE ITEMS
-                </Button>
-              </Link>
-            </Grid>
-            <Grid item md={5} xs={12}>
-              <Box
-                sx={style.voucer}
-                onClick={() =>
-                  cartData.VoucherDiscount > 0
-                    ? dispatch(
+              <Grid item md={5} xs={12}>
+                <Box
+                  sx={style.voucer}
+                  onClick={() =>
+                    cartData.VoucherDiscount > 0
+                      ? dispatch(
                         cartActions.setCart({
                           Voucher: cartSliceIntialState.Voucher,
                           VoucherDiscount: cartSliceIntialState.VoucherDiscount,
                         })
                       )
-                    : handleShowVoucherDialog(true)
-                }
-              >
-                {cartData.VoucherDiscount > 0 ? (
-                  <Typography sx={style.text1} className={poppins.className}>
-                    Remove Voucher
-                  </Typography>
-                ) : (
-                  <>
+                      : handleShowVoucherDialog(true)
+                  }
+                >
+                  {cartData.VoucherDiscount > 0 ? (
                     <Typography sx={style.text1} className={poppins.className}>
-                      Have a Voucher ?
+                      Remove Voucher
                     </Typography>
+                  ) : (
+                    <>
+                      <Typography sx={style.text1} className={poppins.className}>
+                        Have a Voucher ?
+                      </Typography>
+                      <Typography
+                        sx={{ marginTop: "3px", color: colors.primary }}
+                        className={poppins.className}
+                      >
+                        Add your voucher to add discount
+                      </Typography>
+                    </>
+                  )}
+                </Box>
+                {cartData.VoucherDiscount > 0 && (
+                  <Box sx={style.finalizeItem}>
                     <Typography
-                      sx={{ marginTop: "3px", color: colors.primary }}
+                      sx={{ fontWeight: 600 }}
                       className={poppins.className}
                     >
-                      Add your voucher to add discount
+                      Voucher
                     </Typography>
-                  </>
+                    <Typography className={poppins.className}>
+                      Rs.{" -"}
+                      {Number(cartData.VoucherDiscount.toFixed(2))}
+                    </Typography>
+                  </Box>
                 )}
-              </Box>
-              {cartData.VoucherDiscount > 0 && (
-                <Box sx={style.finalizeItem}>
-                  <Typography
-                    sx={{ fontWeight: 600 }}
-                    className={poppins.className}
-                  >
-                    Voucher
-                  </Typography>
-                  <Typography className={poppins.className}>
-                    Rs.{" -"}
-                    {Number(cartData.VoucherDiscount.toFixed(2))}
-                  </Typography>
-                </Box>
-              )}
-              <Box sx={style.finalizeItem}>
-                <Typography
-                  sx={{ fontWeight: 700 }}
-                  className={poppins.className}
-                >
-                  Sub Total
-                </Typography>
-                <Typography className={poppins.className}>
-                  Rs.{" "}
-                  {Number(
-                    (
-                      Number(cartData.cartSubTotal - cartData.VoucherDiscount) *
-                      (1 - Number(addressData.tax) / 100)
-                    ).toFixed(2)
-                  )}
-                </Typography>
-              </Box>
-              <Box sx={style.finalizeItem}>
-                <Typography
-                  sx={{ fontWeight: 700 }}
-                  className={poppins.className}
-                >
-                  GST ({addressData.tax}%)
-                </Typography>
-                <Typography className={poppins.className}>
-                  Rs.{" "}
-                  {Number(
-                    (Number(cartData.cartSubTotal - cartData.VoucherDiscount) *
-                      Number(addressData.tax)) /
-                      100
-                  )?.toFixed(2)}
-                </Typography>
-              </Box>
-              {Number(cartData.discount) > 0 && (
                 <Box sx={style.finalizeItem}>
                   <Typography
                     sx={{ fontWeight: 700 }}
                     className={poppins.className}
-                    color={"green"}
                   >
-                    Discount
+                    Sub Total
                   </Typography>
-                  <Typography className={poppins.className} color={"green"}>
-                    Rs. {Number(cartData.discount)?.toFixed(2)}
+                  <Typography className={poppins.className}>
+                    Rs.{" "}
+                    {Number(
+                      (
+                        Number(cartData.cartSubTotal - cartData.VoucherDiscount) *
+                        (1 - Number(addressData.tax) / 100)
+                      ).toFixed(2)
+                    )}
                   </Typography>
                 </Box>
-              )}
-              <Box sx={style.finalizeItem}>
-                <Typography
-                  sx={{ fontWeight: 700 }}
-                  className={poppins.className}
-                >
-                  Delivery
-                </Typography>
-                <Typography className={poppins.className}>
-                  Rs {addressData.addressType === "Delivery" ? "79.00" : "0"}
-                </Typography>
-              </Box>
+                <Box sx={style.finalizeItem}>
+                  <Typography
+                    sx={{ fontWeight: 700 }}
+                    className={poppins.className}
+                  >
+                    GST ({addressData.tax}%)
+                  </Typography>
+                  <Typography className={poppins.className}>
+                    Rs.{" "}
+                    {Number(
+                      (Number(cartData.cartSubTotal - cartData.VoucherDiscount) *
+                        Number(addressData.tax)) /
+                      100
+                    )?.toFixed(2)}
+                  </Typography>
+                </Box>
+                {Number(cartData.discount) > 0 && (
+                  <Box sx={style.finalizeItem}>
+                    <Typography
+                      sx={{ fontWeight: 700 }}
+                      className={poppins.className}
+                      color={"green"}
+                    >
+                      Discount
+                    </Typography>
+                    <Typography className={poppins.className} color={"green"}>
+                      Rs. {Number(cartData.discount)?.toFixed(2)}
+                    </Typography>
+                  </Box>
+                )}
+                <Box sx={style.finalizeItem}>
+                  <Typography
+                    sx={{ fontWeight: 700 }}
+                    className={poppins.className}
+                  >
+                    Delivery
+                  </Typography>
+                  <Typography className={poppins.className}>
+                    Rs {addressData.addressType === "Delivery" ? "79.00" : "0"}
+                  </Typography>
+                </Box>
 
-              <Box sx={style.finalizeItem}>
-                <Typography
-                  sx={{ fontWeight: 700 }}
-                  className={poppins.className}
-                >
-                  Total
-                </Typography>
-                <Typography className={poppins.className}>
-                  Rs.{" "}
-                  {Number(
-                    cartData.cartSubTotal -
+                <Box sx={style.finalizeItem}>
+                  <Typography
+                    sx={{ fontWeight: 700 }}
+                    className={poppins.className}
+                  >
+                    Total
+                  </Typography>
+                  <Typography className={poppins.className}>
+                    Rs.{" "}
+                    {Number(
+                      cartData.cartSubTotal -
                       cartData.VoucherDiscount +
                       (addressData.addressType === "Delivery" ? 79 : 0)
-                  )?.toFixed(2)}
-                </Typography>
-              </Box>
+                    )?.toFixed(2)}
+                  </Typography>
+                </Box>
 
-              <Button
-                disabled={cartData.cartProducts.length <= 0}
-                sx={[style.butn]}
-                className={poppins.className}
-                onClick={() => {
-                  if (cartData.cartProducts.length > 0)
-                    fbq("track", "InitiateCheckout");
-                  gtag("event", "begin_checkout", {
-                    currency: "PKR",
-                    value: Number(
-                      cartData.cartSubTotal -
+                <Button
+                  disabled={cartData.cartProducts.length <= 0}
+                  sx={[style.butn]}
+                  className={poppins.className}
+                  onClick={() => {
+                    if (cartData.cartProducts.length > 0)
+                      fbq("track", "InitiateCheckout");
+                    gtag("event", "begin_checkout", {
+                      currency: "PKR",
+                      value: Number(
+                        cartData.cartSubTotal -
                         cartData.VoucherDiscount +
                         (addressData.addressType === "Delivery" ? 79 : 0)
-                    )?.toFixed(2),
-                    items: cartData.cartProducts,
-                  });
+                      )?.toFixed(2),
+                      items: cartData.cartProducts,
+                    });
 
-                  router.push("/place-order");
-                }}
-              >
-                Place Order
-              </Button>
+                    router.push("/place-order");
+                  }}
+                >
+                  Place Order
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </Container>
+          </Container>
+        )}
       </Box>
       <VoucherDialog
         voucherDialog={voucherDialog}
