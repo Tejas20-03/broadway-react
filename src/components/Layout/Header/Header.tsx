@@ -28,7 +28,7 @@ import IconButton from "@mui/material/IconButton";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreDispatch, StoreState } from "@/redux/reduxStore";
 import { cartActions, cartSliceIntialState } from "@/redux/cart/slice";
@@ -50,6 +50,9 @@ const poppins = Poppins({
 });
 const Header: React.FC = () => {
   const router = useRouter();
+  const pathname = usePathname();
+  const isMenuPage = pathname === '/menu';
+
   const addressData = useSelector((state: StoreState) => state.address);
   const dispatch = useDispatch<StoreDispatch>();
 
@@ -161,30 +164,54 @@ const Header: React.FC = () => {
               onClick={redirectToHome}
             />
           </Box>
-          <Box
-            sx={style.headerLocationBox}
-            onClick={() => toggleDrawer(true)}
-          >
-            <Box sx={style.locationInfo}>
-              <Location />
+          {isMenuPage && (
+            <Box sx={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
               <Typography
-                sx={style.selectedOption}
+                sx={{
+                  fontSize: '26px',
+                  fontWeight: 500,
+                  opacity: "0.8",
+                  color: colors.black
+                }}
                 className={poppins.className}
               >
-                {addressData.addressType ? addressData.addressType : "Select"}
+                Menu
               </Typography>
             </Box>
-            <Box sx={style.addressType}>
-              <Typography sx={style.location} className={poppins.className}>
-                {addressData.city ? addressData.city : ""}{" "}
-                {addressData.area || addressData.outlet || "Delivery/Pickup"}
-              </Typography>
+          )}
+          {!isMenuPage && (
+            <Box
+              sx={style.headerLocationBox}
+              onClick={() => toggleDrawer(true)}
+            >
+              <Box sx={style.locationInfo}>
+                <Location />
+                <Typography
+                  sx={style.selectedOption}
+                  className={poppins.className}
+                >
+                  {addressData.addressType ? addressData.addressType : "Select"}
+                </Typography>
+              </Box>
+              <Box sx={style.addressType}>
+                <Typography sx={style.location} className={poppins.className}>
+                  {addressData.city ? addressData.city : ""}{" "}
+                  {addressData.area || addressData.outlet || "Delivery/Pickup"}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Container>
 
         <HeaderStrip openFeedbackDialog={openFeedbackDialog} />
       </Box>
+
       <ModbileScreenInput openFeedbackDialog={openFeedbackDialog} />
 
       {addressData.modalOpen && (
@@ -418,7 +445,7 @@ const style = {
     alignItems: "center",
     gap: "0.3rem",
     margin: "2px",
-    width:"100%",
+    width: "100%",
   },
 
   dilveryTo: {

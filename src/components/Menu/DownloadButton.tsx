@@ -42,7 +42,7 @@ const DownloadButton = () => {
           }}
         />
       ) : (
-        "Download"
+        "Download Menu"
       )}
     </Button>
   );
@@ -53,15 +53,17 @@ const style = {
   butn: {
     marginY: "15px",
     paddingY: "8px",
-    color: colors.white,
+    width: { lg: "850px", md: "700px", sm: "500px", xs: "350px" },
+    color: "#0ca353",
     fontWeight: 700,
-    boxShadow: 4,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.white,
+    border: `2px solid #0ca353`,
 
     ":hover": {
-      backgroundColor: colors.primary,
-      color: colors.white,
-      boxShadow: 6,
+      backgroundColor: colors.white,
+      color: "#0ca353",
+      border: `2px solid #0ca353`,
+      boxShadow: 2,
     },
   },
 };

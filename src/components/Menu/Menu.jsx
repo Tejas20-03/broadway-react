@@ -13,9 +13,6 @@ export default async function Menu() {
   const data = await getMenuImage({});
   return (
     <Box sx={style.main}>
-      <Typography className={poppins.className} sx={style.heading}>
-        MENU
-      </Typography>
       <DownloadButton />
       <Container sx={style.container}>
         <Image
@@ -23,8 +20,10 @@ export default async function Menu() {
           style={{
             width: "100%",
             height: "auto",
+            maxWidth: "700px",
+            margin: "auto"
           }}
-          width={1500}
+          width={800}
           height={4948}
           src={data && data?.Data[0]?.value}
           alt="oopx"
@@ -42,6 +41,9 @@ const style = {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+    marginLeft: { lg: "40px", xs: "0" },
+    marginTop: { lg: "20px", xs: "0" },
+
   },
   heading: {
     fontWeight: 700,
