@@ -23,7 +23,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { OptionsType, ProductType } from "@/redux/cart/slice";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
-import { Close } from "@mui/icons-material";
+import { Check, Close } from "@mui/icons-material";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
@@ -567,13 +567,41 @@ const Premium: React.FC<Iprops> = ({
           marginBottom: { xs: 10, lg: 20 },
         }}
       >
-        <Alert
-          onClose={() => setOpenSnackbar(false)}
-          severity="success"
-          sx={{ width: "100%" }}
+        <Box
+          sx={{
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            borderRadius: '12px',
+            padding: '15px 35px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '12px'
+          }}
         >
-          Product Added To Cart!
-        </Alert>
+          <Box
+            sx={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              border: '3px solid white',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Check sx={{ color: 'white' }} />
+          </Box>
+          <Typography
+            className={poppins.className}
+            sx={{
+              color: 'white',
+              fontSize: '14px',
+              fontWeight: 500
+            }}
+          >
+            Added to Cart
+          </Typography>
+        </Box>
       </Snackbar>
     </>
   );

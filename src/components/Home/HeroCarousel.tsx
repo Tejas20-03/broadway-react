@@ -37,6 +37,7 @@ const HeroCarousel: React.FC = () => {
       }}
     >
       <Swiper
+        key="hero-carousel"
         breakpoints={{
           360: { slidesPerView: 1, spaceBetween: 10 },
           768: { slidesPerView: 1, spaceBetween: 20 },
@@ -81,7 +82,6 @@ const HeroCarousel: React.FC = () => {
                   }}
                   width={1920}
                   height={520}
-                  layout="responsive"
                 />
               </Box>
             </SwiperSlide>

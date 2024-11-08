@@ -36,12 +36,11 @@ export default function RootLayout({
   return (
     <>
       <Providers>
-        <html lang="en">
-        <body className={`${poppins.className} ${poppins.variable}`}>
+        <html lang="en" suppressHydrationWarning>
+          <body className={`${poppins.className} ${poppins.variable}`} suppressHydrationWarning>
             <NextTopLoader color={colors.primary} height={6} />
             <Header />
             {children}
-
             <Script
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-DLCLS7RYH8"

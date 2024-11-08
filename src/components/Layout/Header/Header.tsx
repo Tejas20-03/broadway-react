@@ -39,7 +39,6 @@ import { addressesActions } from "@/redux/address/slice";
 import { getFeedbackOutlet } from "@/services/Feedback/services";
 import { error } from "console";
 import { AllOutletsResponseType } from "@/services/Feedback/types";
-import { TiLocationArrowOutline } from "react-icons/ti";
 
 //@ts-ignore
 import { Location } from 'framework7-icons/react'
@@ -129,17 +128,31 @@ const Header: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    let ticking = false;
+  
     const handleScroll = () => {
-      const position = window.pageYOffset;
-      setScrollPosition(position);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const position = window.scrollY;
+          if (position !== scrollPosition) {
+            console.log("Scrolling - Current Position:", position);
+            setScrollPosition(position);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
+  
+    window.addEventListener('scroll', handleScroll);
+    
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [scrollPosition]);
+  
+  
+
 
   return (
     <>
@@ -161,6 +174,7 @@ const Header: React.FC = () => {
               fill={false}
               width={120}
               height={50}
+              priority={true}
               style={{ cursor: "pointer" }}
               onClick={redirectToHome}
             />
@@ -202,7 +216,7 @@ const Header: React.FC = () => {
               </Box>
               <Box sx={style.addressType}>
                 <Typography sx={style.location} className={poppins.className}>
-                  {addressData.city ? addressData.city : ""}{" "}
+                  {/* {addressData.city ? addressData.city : ""}{" "} */}
                   {addressData.area || addressData.outlet || "Delivery/Pickup"}
                 </Typography>
               </Box>
@@ -447,6 +461,9 @@ const style = {
     gap: "0.3rem",
     margin: "2px",
     width: "100%",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
 
   dilveryTo: {
@@ -462,7 +479,7 @@ const style = {
   location: {
     color: colors.black,
     fontWeight: "500",
-    fontSize: { xs: "0.7rem", sm: "0.8rem" },
+    fontSize: { xs: "0.6rem", sm: "0.8rem" },
   },
   inputStyle: {
     "::before": { borderBottom: "0px !important" },
